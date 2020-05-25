@@ -15,6 +15,8 @@ public abstract class Entity {
     String spriteName;
     public BoundingBox box;
 
+    boolean dead = false;
+
     public void render(Graphics g, float camX, float camY){
         g.setColor(Color.YELLOW);
         g.fillRect((int)((camX-position.x())*40),(int)((camY - position.y())*40),40,40);
@@ -40,6 +42,6 @@ public abstract class Entity {
     }
 
     public void kill(){
-
+        dead = true;
     }
 }

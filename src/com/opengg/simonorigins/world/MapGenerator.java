@@ -11,13 +11,15 @@ public class MapGenerator {
         var initialList = new ArrayList<MapNode>();
 
         for(int i = 0; i < rooms; i++){
-            initialList.add(new MapNode(new Random().nextInt(50), new Random().nextInt(50), i));
+            initialList.add(new MapNode(new Random().nextInt(200), new Random().nextInt(10), i));
         }
+
+        initialList.sort(Comparator.comparingInt(node -> node.x));
 
         var roomContents = new ArrayList<List<MapNode>>();
 
         for(int room = 0; room < rooms; room++){
-            float roomUnity = (float) (0.005 + Math.random() * 0.08);
+            float roomUnity = (float) (0.001 + Math.random() * 0.02);
             int count = 0;
             var roomNodes = new ArrayList<MapNode>();
             roomNodes.add(initialList.get(room));
@@ -74,20 +76,16 @@ public class MapGenerator {
                 .flatMap(Collection::stream)
                 .forEach(node -> finalMap[node.x - minX][node.y - minY] = 1);
 
-        for(int i = 0; i < initialList.size(); i++){
-            for(int j = i + 1; j < initialList.size(); j++){
-                var node = initialList.get(i);
-                var next = initialList.get(j);
-                var star = new AStar(maxX - minX + 1, maxY - minY + 1,
-                        new Node(node.x - minX, node.y - minY),
-                        new Node(next.x - minX, next.y - minY));
-                star.findPath().stream().forEach(nnode -> {
-                    finalMap[nnode.getRow()][nnode.getCol()] = 1;
-                    finalMap[nnode.getRow()][nnode.getCol() + 1] = 1;
-
-
-                });
-            }
+        for(int i = 0; i < initialList.size() - 1; i++){
+            var node = initialList.get(i);
+            var next = initialList.get(i + 1);
+            var star = new AStar(maxX - minX + 1, maxY - minY + 1,
+                    new Node(node.x - minX, node.y - minY),
+                    new Node(next.x - minX, next.y - minY));
+            star.findPath().stream().forEach(nnode -> {
+                finalMap[nnode.getRow()][nnode.getCol()] = 1;
+                finalMap[nnode.getRow()][nnode.getCol() + 1] = 1;
+            });
         }
 
         return new Map(finalMap);

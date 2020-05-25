@@ -17,7 +17,7 @@ public class GameState extends State{
         Map.TileSet tileSet = new Map.TileSet();
         tileSet.tileW = 50; tileSet.tileH = 50;
         tileSet.colTile = new Color[]{Color.BLACK,Color.RED,Color.BLACK};
-        this.map = MapGenerator.generateMap(5);
+        this.map = MapGenerator.generateMap(12);
         this.map.tileSet = tileSet;
 
         var firstClear = new Vec2(10000, 10000);

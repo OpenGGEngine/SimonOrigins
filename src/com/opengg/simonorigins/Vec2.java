@@ -21,7 +21,15 @@ public record Vec2(float x, float y) {
         return new Vec2(x / other.x, y / other.y);
     }
 
+    public Vec2 div(float other){
+        return new Vec2(x / other, y / other);
+    }
+
     public float length(){
         return (float) Math.sqrt(x*x + y*y);
+    }
+
+    public Vec2 normalize(){
+        return div(length());
     }
 }
