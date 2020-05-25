@@ -1,10 +1,13 @@
 package com.opengg.simonorigins;
 
 import java.awt.*;
+import java.util.ArrayList;
+
 import com.opengg.simonorigins.world.*;
 
 public class GameState extends State{
     public Map map;
+    public java.util.List<Entity> entities;
     double posX=0; double posY=0;
 
     public GameState(){
@@ -13,6 +16,8 @@ public class GameState extends State{
         tileSet.colTile = new Color[]{Color.BLACK,Color.RED,Color.BLACK};
         this.map = MapGenerator.generateMap(5, MapGenerator.MapType.SQUARE_ROOM);
         this.map.tileSet = tileSet;
+
+        entities = new ArrayList<>();
     }
     @Override
     public void draw(Graphics g) {
