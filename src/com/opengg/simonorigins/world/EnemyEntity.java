@@ -1,7 +1,5 @@
 package com.opengg.simonorigins.world;
 
-import com.opengg.simonorigins.Pos;
-
 import java.util.Map;
 
 public class EnemyEntity extends Entity{
@@ -27,6 +25,11 @@ public class EnemyEntity extends Entity{
 
             }
         }
+    }
+
+    @Override
+    public void onCollision(Entity other) {
+
     }
 
     public void updateState(){

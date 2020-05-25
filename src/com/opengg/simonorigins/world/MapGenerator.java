@@ -1,14 +1,11 @@
 package com.opengg.simonorigins.world;
 
-import com.opengg.simonorigins.Pos;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class MapGenerator {
-    public static Map generateMap(float rooms, MapType maps){
+    public static Map generateMap(float rooms){
         var initialList = new ArrayList<MapNode>();
-
 
         for(int i = 0; i < rooms; i++){
             initialList.add(new MapNode(new Random().nextInt(50), new Random().nextInt(50), i));
@@ -22,7 +19,6 @@ public class MapGenerator {
             var roomNodes = new ArrayList<MapNode>();
             roomNodes.add(initialList.get(room));
             nodeLoop: while(count < 80 + new Random().nextInt(40)){
-                System.out.println(count);
                 var emptyNodes = getEmptyNodes(roomNodes);
                 for(var node : emptyNodes){
                     if(node.right == null && Math.random() < roomUnity){
@@ -68,8 +64,6 @@ public class MapGenerator {
         int minY = roomContents.stream()
                 .flatMap(Collection::stream)
                 .mapToInt(node -> node.y).min().getAsInt();
-
-        System.out.println(maxX + " " + maxY);
 
         int[][] finalMap = new int[maxX - minX + 1][maxY - minY + 1];
 

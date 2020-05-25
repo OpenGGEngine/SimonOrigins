@@ -8,7 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class Main extends JPanel implements KeyListener {
-    GameState state = new GameState();
+    public static GameState state = new GameState();
     boolean[] keyCode = new boolean[512];
     public static void main(String[] args) {
         JFrame frame = new JFrame("Simon Escape");

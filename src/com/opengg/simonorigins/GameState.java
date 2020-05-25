@@ -14,7 +14,7 @@ public class GameState extends State{
         Map.TileSet tileSet = new Map.TileSet();
         tileSet.tileW = 20; tileSet.tileH = 20;
         tileSet.colTile = new Color[]{Color.BLACK,Color.RED,Color.BLACK};
-        this.map = MapGenerator.generateMap(5, MapGenerator.MapType.SQUARE_ROOM);
+        this.map = MapGenerator.generateMap(5);
         this.map.tileSet = tileSet;
 
         entities = new ArrayList<>();
