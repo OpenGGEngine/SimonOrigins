@@ -17,19 +17,32 @@ public class GameState extends State{
         Map.TileSet tileSet = new Map.TileSet();
         tileSet.tileW = 50; tileSet.tileH = 50;
         tileSet.colTile = new Color[]{Color.BLACK,Color.RED,Color.BLACK};
-        this.map = MapGenerator.generateMap(5, MapGenerator.MapType.SQUARE_ROOM);
+        this.map = MapGenerator.generateMap(5);
         this.map.tileSet = tileSet;
 
+        var firstClear = new Vec2(10000, 10000);
+
+        for(int i = 0; i < map.map.length; i++){
+            for(int j = 0; j < map.map[i].length; j++){
+                if(map.map[i][j] != 0){
+                    var pos = new Vec2(i, j);
+                    if(pos.length() < firstClear.length()) firstClear = pos;
+                }
+            }
+        }
+
         entities = new ArrayList<>();
-        entities.add(new Player(new Pos(0,0)));
-        Entity e = new Entity();
-        e.position = new Pos(1,1);
-        Entity e1 = new Entity();
-        e1.position = new Pos(4,4);
+
+        entities.add(new Player(firstClear));
+        EnemyEntity e = EnemyEntity.Factory.generateFromName("basic");
+        e.position = firstClear.add(new Vec2(0,1));
+        EnemyEntity e1 = EnemyEntity.Factory.generateFromName("basic");
+        e1.position = firstClear.add(new Vec2(1,1));
         entities.add(e);
         entities.add(e1);
         player = (Player)entities.get(0);
     }
+
     @Override
     public void draw(Graphics g) {
         g.clearRect(0,0,600,600);
@@ -73,6 +86,12 @@ public class GameState extends State{
         g.fillRect((int)(pX*map.tileSet.tileW),(int)(pY*map.tileSet.tileH),map.tileSet.tileW,map.tileSet.tileH);
         for(int i=1;i<entities.size();i++){
             entities.get(i).render(g,tileXIndex,tileYIndex);
+        }
+    }
+
+    public void update(float delta){
+        for(var e : entities){
+            e.update(delta);
         }
     }
 }

@@ -8,8 +8,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class Main extends JPanel implements KeyListener {
-    GameState state = new GameState();
+    public static GameState state = new GameState();
     boolean[] keyCode = new boolean[512];
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("Simon Escape");
         frame.setSize(600,600);
@@ -37,16 +38,23 @@ public class Main extends JPanel implements KeyListener {
     public Main(){
         setSize(600,600);
     }
+
     public void update(float delta){
+        float vel = 1.5f;
+        float x = 0;
+        float y = 0;
         if(keyCode[KeyEvent.VK_LEFT]){
-            state.player.position=state.player.position.add(new Pos(-0.5f*delta,0));
+            x = -vel;
         }else if(keyCode[KeyEvent.VK_RIGHT]){
-            state.player.position=state.player.position.add(new Pos(0.5f*delta,0));
+            x = vel;
         }else if(keyCode[KeyEvent.VK_UP]){
-            state.player.position=state.player.position.add(new Pos(0,-0.5f*delta));
+            y = -vel;
         }else if(keyCode[KeyEvent.VK_DOWN]){
-            state.player.position=state.player.position.add(new Pos(0f,0.5f*delta));
+            y = vel;
         }
+
+        state.player.velocity = new Vec2(x,y);
+        state.update(delta);
     }
     @Override
     public void paintComponent(Graphics g) {

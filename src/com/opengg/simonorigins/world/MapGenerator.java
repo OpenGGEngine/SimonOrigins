@@ -1,14 +1,14 @@
 package com.opengg.simonorigins.world;
 
-import com.opengg.simonorigins.Pos;
+import com.opengg.simonorigins.AStar;
+import com.opengg.simonorigins.Node;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class MapGenerator {
-    public static Map generateMap(float rooms, MapType maps){
+    public static Map generateMap(float rooms){
         var initialList = new ArrayList<MapNode>();
-
 
         for(int i = 0; i < rooms; i++){
             initialList.add(new MapNode(new Random().nextInt(50), new Random().nextInt(50), i));
@@ -22,7 +22,6 @@ public class MapGenerator {
             var roomNodes = new ArrayList<MapNode>();
             roomNodes.add(initialList.get(room));
             nodeLoop: while(count < 80 + new Random().nextInt(40)){
-                System.out.println(count);
                 var emptyNodes = getEmptyNodes(roomNodes);
                 for(var node : emptyNodes){
                     if(node.right == null && Math.random() < roomUnity){
@@ -69,13 +68,27 @@ public class MapGenerator {
                 .flatMap(Collection::stream)
                 .mapToInt(node -> node.y).min().getAsInt();
 
-        System.out.println(maxX + " " + maxY);
-
         int[][] finalMap = new int[maxX - minX + 1][maxY - minY + 1];
 
         roomContents.stream()
                 .flatMap(Collection::stream)
                 .forEach(node -> finalMap[node.x - minX][node.y - minY] = 1);
+
+        for(int i = 0; i < initialList.size(); i++){
+            for(int j = i + 1; j < initialList.size(); j++){
+                var node = initialList.get(i);
+                var next = initialList.get(j);
+                var star = new AStar(maxX - minX + 1, maxY - minY + 1,
+                        new Node(node.x - minX, node.y - minY),
+                        new Node(next.x - minX, next.y - minY));
+                star.findPath().stream().forEach(nnode -> {
+                    finalMap[nnode.getRow()][nnode.getCol()] = 1;
+                    finalMap[nnode.getRow()][nnode.getCol() + 1] = 1;
+
+
+                });
+            }
+        }
 
         return new Map(finalMap);
     }
