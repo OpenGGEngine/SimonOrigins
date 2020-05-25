@@ -7,12 +7,13 @@ public class Map {
     public TileSet tileSet;
 
     public Map(int[][] map) {
+        System.out.println("Map Size: " + map.length + ","+map[0].length);
         this.map = map;
     }
 
     public void draw(Graphics g,int xCam,int yCam,int camWidth,int camHeight,int mapOffX,int mapOffY){
-        for(int x =  xCam; x < camWidth; x++){
-            for(int y = yCam; y < camHeight; y++){
+        for(int x =  xCam; x < xCam+camWidth; x++){
+            for(int y = yCam; y < yCam + camHeight; y++){
                 g.setColor(tileSet.colTile[map[x][y]]);
                 g.fillRect(((x-xCam)*tileSet.tileW + mapOffX), ((y-yCam)*tileSet.tileH + mapOffY), tileSet.tileW, tileSet.tileH);
             }

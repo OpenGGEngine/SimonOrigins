@@ -51,7 +51,7 @@ public class EnemyEntity extends Entity{
 
         private final Map<String, EntityDescriptor> entityDescriptorMap = Map.ofEntries(
                 Map.entry("basic", new EntityDescriptor(
-                        5, AttackType.NORMAL
+                        5, AttackType.NORMAL_RANGED
                 ))
         );
 
@@ -61,7 +61,8 @@ public class EnemyEntity extends Entity{
     }
 
     enum AttackType{
-        NORMAL(5);
+        NORMAL_RANGED(5),
+        NORMAL_MELEE(3);
 
         float frequency;
 

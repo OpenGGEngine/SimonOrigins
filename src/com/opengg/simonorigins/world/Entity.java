@@ -13,7 +13,7 @@ public abstract class Entity {
 
     public void update(float delta){
         var old = position;
-        position = position.add(velocity);
+        position = position.add(velocity.mult(delta));
         box = new BoundingBox(new Vec2(0,0), new Vec2(1,1), position, this);
         box.recreate();
         var collided = CollisionManager.collide(this);
