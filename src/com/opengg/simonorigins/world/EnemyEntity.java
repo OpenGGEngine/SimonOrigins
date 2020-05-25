@@ -1,12 +1,14 @@
 package com.opengg.simonorigins.world;
 
+import com.opengg.simonorigins.Vec2;
+
 import java.util.Map;
 import java.util.stream.IntStream;
 
 public class EnemyEntity extends Entity{
     Factory.EntityDescriptor entityData;
     String name;
-    State currentState;
+    State currentState = State.IDLE;
 
     float attackTimer = 0;
     boolean cooldown = false;
@@ -14,10 +16,13 @@ public class EnemyEntity extends Entity{
     public EnemyEntity(Factory.EntityDescriptor descriptor) {
         this.entityData = descriptor;
         this.maxHealth = entityData.health;
+        this.box = new BoundingBox(new Vec2(0.25f,0.25f), new Vec2(0.75f,0.75f), new Vec2(0,0), this);
     }
 
     @Override
     public void update(float delta){
+        super.update(delta);
+
         if(cooldown){
             attackTimer += delta;
             if(attackTimer > 1.0f/this.entityData.attack.frequency){
@@ -26,7 +31,6 @@ public class EnemyEntity extends Entity{
             }
         }
 
-        this.update(delta);
         updateState();
         switch (currentState){
             case ATTACKING -> {
@@ -68,13 +72,13 @@ public class EnemyEntity extends Entity{
     public static class Factory{
         public record EntityDescriptor(String sprite, float health, AttackType attack){}
 
-        private final Map<String, EntityDescriptor> entityDescriptorMap = Map.ofEntries(
+        private static final Map<String, EntityDescriptor> entityDescriptorMap = Map.ofEntries(
                 Map.entry("basic", new EntityDescriptor(
                         "bomb.png", 5, AttackType.NORMAL_RANGED
                 ))
         );
 
-        public EnemyEntity generateFromName(String name){
+        public static EnemyEntity generateFromName(String name){
             return new EnemyEntity(entityDescriptorMap.get(name));
         }
     }

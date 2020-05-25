@@ -3,15 +3,22 @@ package com.opengg.simonorigins.world;
 import com.opengg.simonorigins.CollisionManager;
 import com.opengg.simonorigins.Vec2;
 
+import java.awt.*;
+
 public abstract class Entity {
     public Vec2 position;
-    public Vec2 velocity;
+    public Vec2 velocity = new Vec2(0,0);
 
     float maxHealth = 100;
+
     float health;
     String spriteName;
     public BoundingBox box;
 
+    public void render(Graphics g, float camX, float camY){
+        g.setColor(Color.YELLOW);
+        g.fillRect((int)((camX-position.x())*40),(int)((camY - position.y())*40),40,40);
+    }
     public void update(float delta){
         var old = position;
         position = position.add(velocity.mult(delta));

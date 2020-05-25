@@ -15,7 +15,7 @@ public class GameState extends State{
 
     public GameState(){
         Map.TileSet tileSet = new Map.TileSet();
-        tileSet.tileW = 40; tileSet.tileH = 40;
+        tileSet.tileW = 50; tileSet.tileH = 50;
         tileSet.colTile = new Color[]{Color.BLACK,Color.RED,Color.BLACK};
         this.map = MapGenerator.generateMap(5);
         this.map.tileSet = tileSet;
@@ -32,7 +32,14 @@ public class GameState extends State{
         }
 
         entities = new ArrayList<>();
+
         entities.add(new Player(firstClear));
+        EnemyEntity e = EnemyEntity.Factory.generateFromName("basic");
+        e.position = firstClear.add(new Vec2(0,1));
+        EnemyEntity e1 = EnemyEntity.Factory.generateFromName("basic");
+        e1.position = firstClear.add(new Vec2(1,1));
+        entities.add(e);
+        entities.add(e1);
         player = (Player)entities.get(0);
     }
 
@@ -43,32 +50,43 @@ public class GameState extends State{
         //player.position.x()
         int tileXIndex = (int)(player.position.x());
         int tileYIndex = (int)(player.position.y());
-        int mapOffX = ((int)player.position.x())%map.tileSet.tileW;
-        int mapOffY = ((int)player.position.y())%map.tileSet.tileH;
+        int mapOffX = 0;
+        int mapOffY = 0;
 
         float pX = player.position.x();
         float pY = player.position.y();
+        float enX = player.position.x();
+        float enY = player.position.y();
         if(player.position.x() < (camWidth)/2.0f){
             tileXIndex = 0;
-        }else if(player.position.x() >= (map.map.length -  camWidth)){
+            enX = 0;
+        }else if(player.position.x() >= (map.map.length -  camWidth/2.0f)){
             tileXIndex = map.map.length -  camWidth;
+            pX = camWidth -( map.map.length-player.position.x());
         }else{
             tileXIndex = tileXIndex-camWidth/2;
             pX = (camWidth)/2.0f;
+            mapOffX = (int)(player.position.x()*map.tileSet.tileW %map.tileSet.tileW);
         }
         if(player.position.y() < (camHeight)/2.0f){
             tileYIndex = 0;
-        }else if(player.position.y() >= (map.map[0].length - camHeight)){
+            enY = 0;
+        }else if(player.position.y() >= (map.map[0].length - camHeight/2.0f)){
             tileYIndex = map.map[0].length - camHeight;
+            pY = camHeight-( map.map[0].length-player.position.y());
         }else{
             tileYIndex = tileYIndex-camHeight/2;
             pY = (camHeight)/2.0f;
+            mapOffY = (int)(player.position.y()*map.tileSet.tileH %map.tileSet.tileH);
         }
 
 
-        map.draw(g,tileXIndex,tileYIndex,camWidth,camHeight,0,0);
+        map.draw(g,tileXIndex,tileYIndex,camWidth,camHeight,-mapOffX,-mapOffY);
         g.setColor(Color.BLUE);
-        g.fillRect((int)(pX*map.tileSet.tileW),(int)(pY*map.tileSet.tileH),40,40);
+        g.fillRect((int)(pX*map.tileSet.tileW),(int)(pY*map.tileSet.tileH),map.tileSet.tileW,map.tileSet.tileH);
+        for(int i=1;i<entities.size();i++){
+            entities.get(i).render(g,enX,enY);
+        }
     }
 
     public void update(float delta){
