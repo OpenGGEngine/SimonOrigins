@@ -19,7 +19,7 @@ public abstract class Entity {
 
     public void render(Graphics g, float camX, float camY){
         g.setColor(Color.YELLOW);
-        g.fillRect((int)((camX-position.x())*40),(int)((camY - position.y())*40),40,40);
+        g.fillRect((int)((position.x()-camX)*50),(int)((position.y()-camY)*50),50,50);
     }
     public void update(float delta){
         var old = position;
