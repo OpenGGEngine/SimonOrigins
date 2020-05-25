@@ -24,8 +24,11 @@ public class Main extends JPanel implements KeyListener {
         });
         maindow.setVisible(true);
         frame.add(maindow);
+        long prevTime = System.nanoTime();
         while(true){
-            maindow.repaintUp();
+            long time = System.nanoTime();
+            maindow.repaintUp((time-prevTime)/(float)(1e9));
+            prevTime = time;
         }
 
     }
@@ -33,21 +36,20 @@ public class Main extends JPanel implements KeyListener {
     public Main(){
         setSize(600,600);
     }
-    public void repaintUp(){
+    public void repaintUp(float delta){
         if(keyCode[KeyEvent.VK_LEFT]){
-            state.posX+=0.1;
+            state.player.position=state.player.position.add(new Pos(-20f*delta,0));
         }else if(keyCode[KeyEvent.VK_RIGHT]){
-            state.posX-=0.1;
+            state.player.position=state.player.position.add(new Pos(20f*delta,0));
         }else if(keyCode[KeyEvent.VK_UP]){
-            state.posY-=0.1;
+            state.player.position=state.player.position.add(new Pos(0,-20f*delta));
         }else if(keyCode[KeyEvent.VK_DOWN]){
-            state.posY+=0.1;
+            state.player.position=state.player.position.add(new Pos(0f,20f*delta));
         }
         this.paintComponent(this.getGraphics());
     }
     @Override
     public void paintComponent(Graphics g) {
-        g.drawRect(0,0,20,20);
         state.draw(g);
     }
 

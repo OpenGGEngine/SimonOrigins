@@ -3,7 +3,7 @@ package com.opengg.simonorigins.world;
 import com.opengg.simonorigins.Pos;
 
 public class Entity {
-    Pos position;
+    public Pos position;
     float health;
     String spriteName;
 

@@ -10,12 +10,11 @@ public class Map {
         this.map = map;
     }
 
-    public void draw(Graphics g,double xCam,double yCam,int camWidth,int camHeight){
-
-        for(int x = (int) xCam; x < camWidth; x++){
-            for(int y = (int)yCam; y < camHeight; y++){
-                g.setColor(tileSet.colTile[map[y][x]]);
-                g.fillRect((int)((x-xCam)*tileSet.tileW), (int)((y-yCam)*tileSet.tileH), tileSet.tileW, tileSet.tileH);
+    public void draw(Graphics g,int xCam,int yCam,int camWidth,int camHeight,int mapOffX,int mapOffY){
+        for(int x =  xCam; x < camWidth; x++){
+            for(int y = yCam; y < camHeight; y++){
+                g.setColor(tileSet.colTile[map[x][y]]);
+                g.fillRect(((x-xCam)*tileSet.tileW + mapOffX), ((y-yCam)*tileSet.tileH + mapOffY), tileSet.tileW, tileSet.tileH);
             }
         }
     }
