@@ -27,29 +27,32 @@ public class GameState extends State{
     }
     @Override
     public void draw(Graphics g) {
+        g.clearRect(0,0,600,600);
         if(this.map == null) return;
         //player.position.x()
         int tileXIndex = (int)(player.position.x()/map.tileSet.tileW);
         int tileYIndex = (int)(player.position.y()/map.tileSet.tileH);
         //float mapOffX = player.position.x()/map.tileSet.tileW;
         //float mapOffY = player.position.y()/map.tileSet.tileH;
-        System.out.println(player.position.x()+","+(camWidth * map.tileSet.tileW));
-        if(player.position.x() < camWidth * map.tileSet.tileW){
+        float pX = player.position.x();
+        float pY = player.position.y();
+        if(player.position.x() < (camWidth * map.tileSet.tileW)/2.0f){
             tileXIndex = 0;
-        }
-        if(player.position.y() < camHeight * map.tileSet.tileH){
-            tileYIndex = 0;
-        }
-        if(player.position.x() >= (map.map.length -  camWidth) * map.tileSet.tileW){
+        }else if(player.position.x() >= (map.map.length -  camWidth) * map.tileSet.tileW){
             tileXIndex = map.map.length -  camWidth;
+        }else{
+            pX = (camWidth * map.tileSet.tileW)/2.0f;
         }
-        if(player.position.y() >= (map.map[0].length - camHeight) * map.tileSet.tileH){
+        if(player.position.y() < (camHeight * map.tileSet.tileH)/2.0f){
+            tileYIndex = 0;
+        }else if(player.position.y() >= (map.map[0].length - camHeight) * map.tileSet.tileH){
             tileYIndex = map.map[0].length - camHeight;
+        }else{
+            pY = (camHeight * map.tileSet.tileH)/2.0f;
         }
 
-        System.out.println(tileXIndex+","+tileYIndex);
-        g.setColor(Color.BLUE);
-        g.fillRect((int)player.position.x(),(int)player.position.y(),20,20);
         map.draw(g,tileXIndex,tileYIndex,camWidth,camHeight,0,0);
+        g.setColor(Color.BLUE);
+        g.fillRect((int)pX,(int)pY,20,20);
     }
 }
