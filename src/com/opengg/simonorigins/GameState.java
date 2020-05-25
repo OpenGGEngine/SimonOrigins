@@ -31,8 +31,8 @@ public class GameState extends State{
         //player.position.x()
         int tileXIndex = (int)(player.position.x());
         int tileYIndex = (int)(player.position.y());
-        int mapOffX = ((int)player.position.x())%map.tileSet.tileW;
-        int mapOffY = ((int)player.position.y())%map.tileSet.tileH;
+        int mapOffX = 0;
+        int mapOffY = 0;
 
         float pX = player.position.x();
         float pY = player.position.y();
@@ -43,6 +43,7 @@ public class GameState extends State{
         }else{
             tileXIndex = tileXIndex-camWidth/2;
             pX = (camWidth)/2.0f;
+            mapOffX = (int)(player.position.x()*map.tileSet.tileW %map.tileSet.tileW);
         }
         if(player.position.y() < (camHeight)/2.0f){
             tileYIndex = 0;
@@ -51,10 +52,11 @@ public class GameState extends State{
         }else{
             tileYIndex = tileYIndex-camHeight/2;
             pY = (camHeight)/2.0f;
+            mapOffY = (int)(player.position.y()*map.tileSet.tileH %map.tileSet.tileH);
         }
 
 
-        map.draw(g,tileXIndex,tileYIndex,camWidth,camHeight,0,0);
+        map.draw(g,tileXIndex,tileYIndex,camWidth,camHeight,-mapOffX,-mapOffY);
         g.setColor(Color.BLUE);
         g.fillRect((int)(pX*map.tileSet.tileW),(int)(pY*map.tileSet.tileH),40,40);
     }
