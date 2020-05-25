@@ -1,5 +1,8 @@
 package com.opengg.simonorigins.world;
 
+import com.opengg.simonorigins.AStar;
+import com.opengg.simonorigins.Node;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -70,6 +73,22 @@ public class MapGenerator {
         roomContents.stream()
                 .flatMap(Collection::stream)
                 .forEach(node -> finalMap[node.x - minX][node.y - minY] = 1);
+
+        for(int i = 0; i < initialList.size(); i++){
+            for(int j = i + 1; j < initialList.size(); j++){
+                var node = initialList.get(i);
+                var next = initialList.get(j);
+                var star = new AStar(maxX - minX + 1, maxY - minY + 1,
+                        new Node(node.x - minX, node.y - minY),
+                        new Node(next.x - minX, next.y - minY));
+                star.findPath().stream().forEach(nnode -> {
+                    finalMap[nnode.getRow()][nnode.getCol()] = 1;
+                    finalMap[nnode.getRow()][nnode.getCol() + 1] = 1;
+
+
+                });
+            }
+        }
 
         return new Map(finalMap);
     }

@@ -20,6 +20,6 @@ public class CollisionManager {
             }
         }
 
-        return Main.state.map.map[Math.round(object.position.x())][Math.round(object.position.y())] != 0;
+        return Main.state.map.map[Math.round(object.position.x())][Math.round(object.position.y())] == 0;
     }
 }

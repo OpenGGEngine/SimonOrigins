@@ -40,16 +40,20 @@ public class Main extends JPanel implements KeyListener {
     }
 
     public void update(float delta){
-        state.player.velocity = new Vec2(0,0);
+        float vel = 1.5f;
+        float x = 0;
+        float y = 0;
         if(keyCode[KeyEvent.VK_LEFT]){
-            state.player.velocity = new Vec2(-3f,0);
+            x = -vel;
         }else if(keyCode[KeyEvent.VK_RIGHT]){
-            state.player.velocity = new Vec2(3f,0);
+            x = vel;
         }else if(keyCode[KeyEvent.VK_UP]){
-            state.player.velocity = new Vec2(0,-3f);
+            y = -vel;
         }else if(keyCode[KeyEvent.VK_DOWN]){
-            state.player.velocity = new Vec2(0,3f);
+            y = vel;
         }
+
+        state.player.velocity = new Vec2(x,y);
         state.update(delta);
     }
     @Override
