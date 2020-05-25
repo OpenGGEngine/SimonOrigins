@@ -35,8 +35,8 @@ public class GameState extends State{
         g.clearRect(0,0,600,600);
         if(this.map == null) return;
         //player.position.x()
-        int tileXIndex = (int)(player.position.x());
-        int tileYIndex = (int)(player.position.y());
+        float tileXIndex = (player.position.x());
+        float tileYIndex = (player.position.y());
         int mapOffX = 0;
         int mapOffY = 0;
 
@@ -51,7 +51,7 @@ public class GameState extends State{
             tileXIndex = map.map.length -  camWidth;
             pX = camWidth -( map.map.length-player.position.x());
         }else{
-            tileXIndex = tileXIndex-camWidth/2;
+            tileXIndex = tileXIndex-camWidth/2.0f;
             pX = (camWidth)/2.0f;
             mapOffX = (int)(player.position.x()*map.tileSet.tileW %map.tileSet.tileW);
         }
@@ -62,17 +62,17 @@ public class GameState extends State{
             tileYIndex = map.map[0].length - camHeight;
             pY = camHeight-( map.map[0].length-player.position.y());
         }else{
-            tileYIndex = tileYIndex-camHeight/2;
+            tileYIndex = tileYIndex-camHeight/2.0f;
             pY = (camHeight)/2.0f;
             mapOffY = (int)(player.position.y()*map.tileSet.tileH %map.tileSet.tileH);
         }
 
 
-        map.draw(g,tileXIndex,tileYIndex,camWidth,camHeight,-mapOffX,-mapOffY);
+        map.draw(g,(int)tileXIndex,(int)tileYIndex,camWidth,camHeight,-mapOffX,-mapOffY);
         g.setColor(Color.BLUE);
         g.fillRect((int)(pX*map.tileSet.tileW),(int)(pY*map.tileSet.tileH),map.tileSet.tileW,map.tileSet.tileH);
         for(int i=1;i<entities.size();i++){
-            entities.get(i).render(g,enX,enY);
+            entities.get(i).render(g,tileXIndex,tileYIndex);
         }
     }
 }
