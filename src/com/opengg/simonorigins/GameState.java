@@ -15,13 +15,19 @@ public class GameState extends State{
 
     public GameState(){
         Map.TileSet tileSet = new Map.TileSet();
-        tileSet.tileW = 40; tileSet.tileH = 40;
+        tileSet.tileW = 50; tileSet.tileH = 50;
         tileSet.colTile = new Color[]{Color.BLACK,Color.RED,Color.BLACK};
         this.map = MapGenerator.generateMap(5, MapGenerator.MapType.SQUARE_ROOM);
         this.map.tileSet = tileSet;
 
         entities = new ArrayList<>();
         entities.add(new Player(new Pos(0,0)));
+        Entity e = new Entity();
+        e.position = new Pos(1,1);
+        Entity e1 = new Entity();
+        e1.position = new Pos(4,4);
+        entities.add(e);
+        entities.add(e1);
         player = (Player)entities.get(0);
     }
     @Override
@@ -36,10 +42,14 @@ public class GameState extends State{
 
         float pX = player.position.x();
         float pY = player.position.y();
+        float enX = player.position.x();
+        float enY = player.position.y();
         if(player.position.x() < (camWidth)/2.0f){
             tileXIndex = 0;
-        }else if(player.position.x() >= (map.map.length -  camWidth)){
+            enX = 0;
+        }else if(player.position.x() >= (map.map.length -  camWidth/2.0f)){
             tileXIndex = map.map.length -  camWidth;
+            pX = camWidth -( map.map.length-player.position.x());
         }else{
             tileXIndex = tileXIndex-camWidth/2;
             pX = (camWidth)/2.0f;
@@ -47,8 +57,10 @@ public class GameState extends State{
         }
         if(player.position.y() < (camHeight)/2.0f){
             tileYIndex = 0;
-        }else if(player.position.y() >= (map.map[0].length - camHeight)){
+            enY = 0;
+        }else if(player.position.y() >= (map.map[0].length - camHeight/2.0f)){
             tileYIndex = map.map[0].length - camHeight;
+            pY = camHeight-( map.map[0].length-player.position.y());
         }else{
             tileYIndex = tileYIndex-camHeight/2;
             pY = (camHeight)/2.0f;
@@ -58,6 +70,9 @@ public class GameState extends State{
 
         map.draw(g,tileXIndex,tileYIndex,camWidth,camHeight,-mapOffX,-mapOffY);
         g.setColor(Color.BLUE);
-        g.fillRect((int)(pX*map.tileSet.tileW),(int)(pY*map.tileSet.tileH),40,40);
+        g.fillRect((int)(pX*map.tileSet.tileW),(int)(pY*map.tileSet.tileH),map.tileSet.tileW,map.tileSet.tileH);
+        for(int i=1;i<entities.size();i++){
+            entities.get(i).render(g,enX,enY);
+        }
     }
 }
