@@ -39,13 +39,13 @@ public class Main extends JPanel implements KeyListener {
     }
     public void update(float delta){
         if(keyCode[KeyEvent.VK_LEFT]){
-            state.player.position=state.player.position.add(new Pos(-40f*delta,0));
+            state.player.position=state.player.position.add(new Pos(-0.5f*delta,0));
         }else if(keyCode[KeyEvent.VK_RIGHT]){
-            state.player.position=state.player.position.add(new Pos(40f*delta,0));
+            state.player.position=state.player.position.add(new Pos(0.5f*delta,0));
         }else if(keyCode[KeyEvent.VK_UP]){
-            state.player.position=state.player.position.add(new Pos(0,-40f*delta));
+            state.player.position=state.player.position.add(new Pos(0,-0.5f*delta));
         }else if(keyCode[KeyEvent.VK_DOWN]){
-            state.player.position=state.player.position.add(new Pos(0f,40f*delta));
+            state.player.position=state.player.position.add(new Pos(0f,0.5f*delta));
         }
     }
     @Override
