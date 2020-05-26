@@ -19,7 +19,7 @@ public class Map {
 
     public void draw(Graphics g,int xCam,int yCam,int camWidth,int camHeight,int mapOffX,int mapOffY){
         Main.state.light.clear();
-        for(int x =  xCam; x < xCam+camWidth; x++){
+        for(int x =  xCam; x < xCam+camWidth + 1; x++){
             for(int y = yCam; y < yCam + camHeight; y++){
                 if(map[x][y] == 3){
                     Main.state.light.add(new Vec2(x,y));

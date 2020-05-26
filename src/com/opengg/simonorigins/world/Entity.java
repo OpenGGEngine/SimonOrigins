@@ -1,8 +1,6 @@
 package com.opengg.simonorigins.world;
 
-import com.opengg.simonorigins.CollisionManager;
-import com.opengg.simonorigins.Sprite;
-import com.opengg.simonorigins.Vec2;
+import com.opengg.simonorigins.*;
 
 import java.awt.*;
 
@@ -22,10 +20,10 @@ public abstract class Entity {
     public void render(Graphics g, float camX, float camY){
 
         if(sprite != null){
-                g.drawImage(sprite.image(),(int) ((position.x() - camX - width/2) * 50), (int) ((position.y() - camY - width/2) * 50), (int) (50 * width), (int) (50 * width), null);
+                g.drawImage(sprite.image(),(int) ((position.x() - camX - width/2) * GameState.tileWidth), (int) ((position.y() - camY - width/2) * GameState.tileWidth), (int) (GameState.tileWidth * width), (int) (GameState.tileWidth * width), null);
         }else {
             g.setColor(Color.YELLOW);
-            g.fillRect((int) ((position.x() - camX - width) * 50), (int) ((position.y() - camY - width) * 50), (int) (50 * width), (int) (50 * width));
+            g.fillRect((int) ((position.x() - camX - width) * GameState.tileWidth), (int) ((position.y() - camY - width) * GameState.tileWidth), (int) (GameState.tileWidth * width), (int) (GameState.tileWidth * width));
         }
     }
     public void update(float delta){

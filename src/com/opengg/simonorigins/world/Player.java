@@ -25,7 +25,7 @@ public class Player extends Entity{
             int x = MouseInfo.getPointerInfo().getLocation().x-Main.state.panel.getX();
             int y = MouseInfo.getPointerInfo().getLocation().y-Main.state.panel.getY()-10;
 
-            var shootDir = new Vec2(x-50*px,y-50*py).normalize();
+            var shootDir = new Vec2(x-GameState.tileWidth*px,y-GameState.tileWidth*py).normalize();
             var real = realAngle + Math.atan2(shootDir.y(), shootDir.x());
             var realOutputDir = new Vec2((float)Math.cos(real), (float)Math.sin(real));
             var proj = new Projectile(this.current.range/10f, this.current.damage, true);
