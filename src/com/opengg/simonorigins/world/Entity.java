@@ -18,8 +18,8 @@ public abstract class Entity {
      public boolean dead = false;
 
     public void render(Graphics g, float camX, float camY){
-
-        if(sprite != null){
+        
+        if(sprite != null && (int) ((position.x() - camX - width/2) * 50)>0 && ((position.x() - camX - width/2) * 50)<=600){
                 g.drawImage(sprite.image(),(int) ((position.x() - camX - width/2) * GameState.tileWidth), (int) ((position.y() - camY - width/2) * GameState.tileWidth), (int) (GameState.tileWidth * width), (int) (GameState.tileWidth * width), null);
         }else {
             g.setColor(Color.YELLOW);
