@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class MapGenerator {
-    public static MapContents generateMap(int rooms){
+    public static MapContents generateMap(int rooms, int level){
         var initialList = new ArrayList<MapNode>();
         float currentX = 0;
 
@@ -100,6 +100,20 @@ public class MapGenerator {
         for(int room = 1; room < rooms; room++){
             int enemyCount = 8 + (room);
 
+
+            if(room == 6){
+                if(level == 1){
+                    var enemy = EnemyEntity.Factory.generateFromName("MasterMole");
+                    enemy.position = new Vec2(initialList.get(room).x - minX, initialList.get(room).y - minY);
+                    enemies.add(enemy);
+                }else if(level == 2){
+                    var enemy = EnemyEntity.Factory.generateFromName("Emak");
+                    enemy.position = new Vec2(initialList.get(room).x - minX, initialList.get(room).y - minY);
+                    enemies.add(enemy);
+                }
+                continue;
+            }
+
             for(int i = 0; i < enemyCount; i++){
                 var node = roomContents.get(room).get(new Random().nextInt(roomContents.get(room).size()));
                 int nextEnemy = new Random().nextInt(5 + room);
@@ -115,11 +129,6 @@ public class MapGenerator {
                 enemies.add(enemy);
             }
 
-            if(room == rooms - 1){
-                var enemy = EnemyEntity.Factory.generateFromName("MasterMole");
-                enemy.position = new Vec2(initialList.get(room).x - minX, initialList.get(room).y - minY);
-                enemies.add(enemy);
-            }
         }
 
         return new MapContents(new Map(finalMap), enemies);

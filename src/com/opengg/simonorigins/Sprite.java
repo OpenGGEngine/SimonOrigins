@@ -4,7 +4,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public record Sprite (Image image, float width, float height){
@@ -26,6 +25,7 @@ public record Sprite (Image image, float width, float height){
                         ,Map.entry("Bomb", new Sprite("resource/texture/bomb.png", 0.5f, 0.1f))
                         ,Map.entry("Cavalry", new Sprite("resource/texture/Cavalry.png", 0.5f, 0.1f))
                         ,Map.entry("MasterMole", new Sprite("resource/texture/mole.png", 0.5f, 0.1f))
+                        ,Map.entry("Emak", new Sprite("resource/texture/emak.png", 0.5f, 0.5f))
                         ,Map.entry("Dead", new Sprite("resource/texture/died.jpg", 0.5f, 0.5f))
                     ,Map.entry("Light", new Sprite("resource/texture/lavatexture.png", 0.5f, 0.5f))
                     ,Map.entry("Shotgun", new Sprite("resource/texture/shotgun.png", 0.5f, 0.5f))

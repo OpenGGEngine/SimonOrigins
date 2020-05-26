@@ -27,24 +27,39 @@ public class GameState extends State{
 
     float dieAlpha = 0;
 
-    public GameState(){
+    public GameState(int level){
         newEntities = new ArrayList<>();
         entities = new ArrayList<>();
+        setNewMap(level);
+        player = (Player)entities.get(0);
+    }
 
+    private void setNewMap(int level){
         Map.TileSet tileSet = new Map.TileSet();
         tileSet.tileW = 50; tileSet.tileH = 50;
         tileSet.colTile = new Color[]{Color.BLACK,Color.RED,Color.BLACK};
-        var contents = MapGenerator.generateMap(12);
+        var contents = MapGenerator.generateMap(12, level);
         this.map = contents.map();
         this.map.tileSet = tileSet;
 
         this.entities = contents.entities();
 
         try {
-            tileSet.tileset[1] = ImageIO.read(new File("resource/texture/floor.png"));
-            tileSet.tileset[0] = ImageIO.read(new File("resource/texture/wall.png"));
-            tileSet.tileset[2] = ImageIO.read(new File("resource/texture/path.png"));
-            tileSet.tileset[3] = ImageIO.read(new File("resource/texture/lava.png"));
+            switch (level){
+                case 1 -> {
+                    tileSet.tileset[1] = ImageIO.read(new File("resource/texture/grass.png"));
+                    tileSet.tileset[0] = ImageIO.read(new File("resource/texture/wall.png"));
+                    tileSet.tileset[2] = ImageIO.read(new File("resource/texture/grass.png"));
+                    tileSet.tileset[3] = ImageIO.read(new File("resource/texture/lava.png"));
+                }
+                case 2 -> {
+                    tileSet.tileset[1] = ImageIO.read(new File("resource/texture/floor.png"));
+                    tileSet.tileset[0] = ImageIO.read(new File("resource/texture/wall.png"));
+                    tileSet.tileset[2] = ImageIO.read(new File("resource/texture/path.png"));
+                    tileSet.tileset[3] = ImageIO.read(new File("resource/texture/lava.png"));
+                }
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,10 +75,9 @@ public class GameState extends State{
             }
         }
 
-
         entities.add(0, new Player(firstClear));
-        player = (Player)entities.get(0);
     }
+
 
     @Override
     public void draw(Graphics g) {

@@ -11,6 +11,12 @@ import java.util.ArrayList;
  */
 public class CollisionManager {
     public static boolean collide(Entity object){
+        if(Math.round(object.position.x()) >= Main.state.map.map.length || Math.round(object.position.y()) >= Main.state.map.map[0].length) return true;
+        if(Main.state.map.map[Math.round(object.position.x())][Math.round(object.position.y())] == 0){
+            object.onCollision(null);
+            return true;
+        }
+
         for(Entity t : Main.state.entities){
             if(t == object) continue;
             if (object.box.collide(t.box)){
@@ -19,11 +25,7 @@ public class CollisionManager {
                 return true;
             }
         }
-        if(Math.round(object.position.x()) >= Main.state.map.map.length || Math.round(object.position.y()) >= Main.state.map.map[0].length) return true;
-        if(Main.state.map.map[Math.round(object.position.x())][Math.round(object.position.y())] == 0){
-            object.onCollision(null);
-            return true;
-        }
+
         return false;
     }
 }

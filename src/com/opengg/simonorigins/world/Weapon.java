@@ -34,7 +34,9 @@ public enum Weapon {
         LINEAR,
         SPHERE(20, 360),
         DENSE_SPHERE(5, 360),
-        SMALL_ARC(2, 10);
+        SMALL_ARC(2, 10),
+        BIG_ARC(2, 20);
+
 
         float angleBetween;
         float arc;
