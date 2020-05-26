@@ -20,6 +20,7 @@ public class EnemyEntity extends Entity{
         this.maxHealth = entityData.health;
         this.health = this.maxHealth;
         this.width = descriptor.width;
+        this.renderWidth = descriptor.width;
         this.box = new BoundingBox(new Vec2(0.25f,0.25f), new Vec2(0.75f,0.75f), new Vec2(0,0), this);
     }
 
@@ -44,7 +45,7 @@ public class EnemyEntity extends Entity{
         switch (currentState){
             case ATTACKING -> velocity = new Vec2(0,0);
             case RUNNING -> velocity = Main.state.entities.get(0).position.sub(this.position).normalize().mult(this.entityData.movement.velocity);
-            case IDLE -> velocity = velocity.add(new Vec2(((float)Math.random())*0.2f, ((float)Math.random())*0.2f)).normalize().mult(0.3f);
+            case IDLE -> velocity = velocity.add(new Vec2(((float)Math.random() - 0.5f), ((float)Math.random() - 0.5f))).normalize().mult(0.3f);
         }
     }
 
@@ -56,7 +57,7 @@ public class EnemyEntity extends Entity{
             var real = realAngle + Math.atan2(enemyDir.y(), enemyDir.x());
             var realOutputDir = new Vec2((float)Math.cos(real), (float)Math.sin(real));
             var proj = new Projectile(this.entityData.attack.range/4f, this.entityData.attack.damage, false);
-            proj.position = this.position.add(realOutputDir);
+            proj.position = this.position.add(realOutputDir.mult(0.8f));
             proj.velocity = realOutputDir.mult(4f);
             Main.state.newEntities.add(proj);
         }
@@ -101,7 +102,7 @@ public class EnemyEntity extends Entity{
             Main.state.newEntities.add(weapon);
         }
         if(this.entityData.sprite.equals("MasterMole")){
-            Main.state = new GameState(2);
+            Main.setState(new GameState(2));
         }
     }
 
@@ -114,16 +115,16 @@ public class EnemyEntity extends Entity{
 
         private static final Map<String, EntityDescriptor> entityDescriptorMap = Map.ofEntries(
                 Map.entry("Normal", new EntityDescriptor(
-                        "Infantry", 0.6f, 5, Weapon.SMG, MoveType.APPROACH
+                        "Infantry", 0.8f, 5, Weapon.SMG, MoveType.APPROACH
                 )),
                 Map.entry("Bomber", new EntityDescriptor(
-                        "Bomb", 0.6f, 2, Weapon.BOMB, MoveType.JIHADI_JOHN
+                        "Bomb", 0.8f, 2, Weapon.BOMB, MoveType.JIHADI_JOHN
                 )),
                 Map.entry("Shotgun", new EntityDescriptor(
-                        "Cavalry", 0.6f, 8, Weapon.SHOTGUN, MoveType.APPROACH
+                        "Cavalry", 0.8f, 8, Weapon.SHOTGUN, MoveType.APPROACH
                 )),
                 Map.entry("MasterMole", new EntityDescriptor(
-                        "MasterMole", 1f, 120, Weapon.AUTOSHOTGUN, MoveType.BOSS
+                        "MasterMole", 1.2f, 120, Weapon.AUTOSHOTGUN, MoveType.BOSS
                 )),
                 Map.entry("Emak", new EntityDescriptor(
                         "Emak", 1.5f, 200, Weapon.AUTOSHOTGUN, MoveType.BOSS
@@ -138,8 +139,8 @@ public class EnemyEntity extends Entity{
     enum MoveType{
         JIHADI_JOHN(4, 0, 10f),
         RUN_INTO(8,0, 5f),
-        APPROACH(8,1, 5f),
-        BOSS(13,1, 1f);
+        APPROACH(10,1, 5f),
+        BOSS(10,1, 1.5f);
 
 
         float farDist;

@@ -6,18 +6,19 @@ import java.awt.event.*;
 
 public class Main extends JPanel implements KeyListener, MouseListener {
     public static GameState state;
+    private static JFrame frame;
 
     boolean[] keyCode = new boolean[600];
     long prevTime=0;
     long currTime=0;
-    static int WIDTH = 600, HEIGHT = 600;
+    static int WIDTH = 1920, HEIGHT = 1080;
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Simon Escape");
+        frame = new JFrame("Simon Escape");
         frame.setSize(WIDTH,HEIGHT);
         frame.setVisible(true);
+        setState(new GameState(1));
+
         Main maindow = new Main();
-        state = new GameState(1);
-        state.panel = frame;
         frame.addKeyListener(maindow);
         frame.addMouseListener(maindow);
         frame.addWindowListener(new WindowAdapter() {
@@ -38,8 +39,13 @@ public class Main extends JPanel implements KeyListener, MouseListener {
         setSize(WIDTH,HEIGHT);
     }
 
+    public static void setState(GameState state){
+        Main.state = state;
+        state.panel = frame;
+    }
+
     public void update(float delta){
-        float vel = 8f;
+        float vel = 10f;
         float x = 0;
         float y = 0;
         if(keyCode[KeyEvent.VK_A]){
@@ -55,6 +61,9 @@ public class Main extends JPanel implements KeyListener, MouseListener {
         }
         if(keyCode[KeyEvent.VK_S]){
             y = vel;
+        }
+        if(keyCode[KeyEvent.VK_K]){
+            Main.setState(new GameState(2));
         }
         state.player.shooting = keyCode[KeyEvent.VK_SPACE];
 
