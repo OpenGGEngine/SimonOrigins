@@ -16,10 +16,9 @@ public class GameState extends State{
     public java.util.List<Entity> newEntities;
     public java.util.List<Vec2> light = new ArrayList<>();
 
-    public static int tileWidth = Main.HEIGHT/16;
-
-    public static int camWidth = Main.WIDTH/tileWidth;
     public static int camHeight = 16;
+    public static int tileWidth = Main.HEIGHT/camHeight;
+    public static int camWidth = Main.WIDTH/tileWidth;
 
     public Player player;
     public boolean held;

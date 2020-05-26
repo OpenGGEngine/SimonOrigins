@@ -30,7 +30,7 @@ public class Player extends Entity{
             var realOutputDir = new Vec2((float)Math.cos(real), (float)Math.sin(real));
             var proj = new Projectile(this.current.range/10f, this.current.damage, true);
             proj.position = this.position.add(realOutputDir);
-            proj.velocity = realOutputDir.mult(10f);
+            proj.velocity = realOutputDir.mult(10f).add(this.velocity);
             Main.state.newEntities.add(proj);
         }
     }

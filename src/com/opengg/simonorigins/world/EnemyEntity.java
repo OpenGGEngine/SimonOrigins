@@ -44,7 +44,7 @@ public class EnemyEntity extends Entity{
         switch (currentState){
             case ATTACKING -> velocity = new Vec2(0,0);
             case RUNNING -> velocity = Main.state.entities.get(0).position.sub(this.position).normalize().mult(this.entityData.movement.velocity);
-            case IDLE -> velocity = velocity.add(new Vec2(((float)Math.random())*0.2f, ((float)Math.random())*0.2f)).normalize().mult(0.3f);
+            case IDLE -> velocity = velocity.add(new Vec2(((float)Math.random() - 0.5f), ((float)Math.random() - 0.5f))).normalize().mult(0.3f);
         }
     }
 
@@ -101,7 +101,7 @@ public class EnemyEntity extends Entity{
             Main.state.newEntities.add(weapon);
         }
         if(this.entityData.sprite.equals("MasterMole")){
-            Main.state = new GameState(2);
+            Main.setState(new GameState(2));
         }
     }
 
