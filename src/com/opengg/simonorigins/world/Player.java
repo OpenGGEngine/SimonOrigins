@@ -36,6 +36,21 @@ public class Player extends Entity{
     }
 
     @Override
+    public void render(Graphics g, float camX, float camY) {
+        super.render(g, camX, camY);
+        int x = MouseInfo.getPointerInfo().getLocation().x-Main.state.panel.getX();
+        int y = MouseInfo.getPointerInfo().getLocation().y-Main.state.panel.getY()-10;
+        Vec2 shootdir = new Vec2(x-GameState.tileWidth*px,y-GameState.tileWidth*py).normalize();
+        int spriteCenterX = (int) ((position.x() - camX - width/2) * GameState.tileWidth);
+        int spriteCenterY = (int) ((position.y() - camY - width/2) * GameState.tileWidth);
+        g.setColor(Color.ORANGE);
+        g.drawLine(spriteCenterX,
+                spriteCenterY,
+                spriteCenterX * (int)(spriteCenterX+shootdir.x()*70),spriteCenterY+ (int)(spriteCenterY+shootdir.y()*70)
+        );
+    }
+
+    @Override
     public void update(float delta){
         super.update(delta);
 
