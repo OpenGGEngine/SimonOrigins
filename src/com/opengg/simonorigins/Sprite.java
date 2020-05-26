@@ -24,7 +24,7 @@ public record Sprite (Image image, float width, float height){
                         ,Map.entry("Infantry", new Sprite("resource/texture/infantry.png", 0.5f, 0.1f))
                         ,Map.entry("Bomb", new Sprite("resource/texture/bomb.png", 0.5f, 0.1f))
                         ,Map.entry("Cavalry", new Sprite("resource/texture/Cavalry.png", 0.5f, 0.1f))
-
+                        ,Map.entry("MasterMole", new Sprite("resource/texture/mole.png", 0.5f, 0.1f))
             );
         } catch (IOException e) {
             e.printStackTrace();

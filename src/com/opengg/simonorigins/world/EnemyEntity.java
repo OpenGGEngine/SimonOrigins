@@ -107,13 +107,16 @@ public class EnemyEntity extends Entity{
 
         private static final Map<String, EntityDescriptor> entityDescriptorMap = Map.ofEntries(
                 Map.entry("Normal", new EntityDescriptor(
-                        "Infantry", 10, Weapon.NORMAL_RANGED, MoveType.APPROACH
+                        "Infantry", 15, Weapon.SMG, MoveType.APPROACH
                 )),
                 Map.entry("Bomber", new EntityDescriptor(
                         "Bomb", 5, Weapon.BOMB, MoveType.JIHADI_JOHN
                 )),
                 Map.entry("Shotgun", new EntityDescriptor(
-                        "Cavalry", 12, Weapon.SHOTGUN, MoveType.APPROACH
+                        "Cavalry", 20, Weapon.SHOTGUN, MoveType.APPROACH
+                )),
+                Map.entry("MasterMole", new EntityDescriptor(
+                        "MasterMole", 80, Weapon.SHOTGUN, MoveType.APPROACH
                 ))
         );
 

@@ -77,6 +77,11 @@ public class MapGenerator {
                 .flatMap(Collection::stream)
                 .forEach(node -> finalMap[node.x - minX][node.y - minY] = 1);
 
+        roomContents.stream()
+                .flatMap(Collection::stream)
+                .filter(r -> Math.random() < 0.02)
+                .forEach(node -> finalMap[node.x - minX][node.y - minY] = 3);
+
         for(int i = 0; i < initialList.size() - 1; i++){
             var node = initialList.get(i);
             var next = initialList.get(i + 1);
@@ -84,8 +89,8 @@ public class MapGenerator {
                     new Node(node.x - minX, node.y - minY),
                     new Node(next.x - minX, next.y - minY));
             star.findPath().stream().forEach(nnode -> {
-                finalMap[nnode.getRow()][nnode.getCol()] = 1;
-                finalMap[nnode.getRow()][nnode.getCol() + 1] = 1;
+                finalMap[nnode.getRow()][nnode.getCol()] = 2;
+                finalMap[nnode.getRow()][nnode.getCol() + 1] = 2;
             });
         }
 
@@ -95,17 +100,21 @@ public class MapGenerator {
 
             for(int i = 0; i < enemyCount; i++){
                 var node = roomContents.get(room).get(new Random().nextInt(roomContents.get(room).size()));
-                int nextEnemy = new Random().nextInt(10);
+                int nextEnemy = new Random().nextInt(5 + room);
                 EnemyEntity enemy;
                 if(nextEnemy < 5){
                     enemy = EnemyEntity.Factory.generateFromName("Normal");
-                }else if(nextEnemy < 9){
+                }else if(nextEnemy < 10){
                     enemy = EnemyEntity.Factory.generateFromName("Shotgun");
                 }else{
                     enemy = EnemyEntity.Factory.generateFromName("Bomber");
                 }
                 enemy.position = new Vec2(node.x - minX, node.y - minY);
                 enemies.add(enemy);
+            }
+
+            if(room == rooms - 1){
+                var enemy = EnemyEntity.Factory.generateFromName("MasterMole");
             }
         }
 
