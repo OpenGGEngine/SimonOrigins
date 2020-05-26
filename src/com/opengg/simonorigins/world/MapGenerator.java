@@ -95,7 +95,15 @@ public class MapGenerator {
 
             for(int i = 0; i < enemyCount; i++){
                 var node = roomContents.get(room).get(new Random().nextInt(roomContents.get(room).size()));
-                var enemy = EnemyEntity.Factory.generateFromName("Normal");
+                int nextEnemy = new Random().nextInt(10);
+                EnemyEntity enemy;
+                if(nextEnemy < 5){
+                    enemy = EnemyEntity.Factory.generateFromName("Normal");
+                }else if(nextEnemy < 9){
+                    enemy = EnemyEntity.Factory.generateFromName("Shotgun");
+                }else{
+                    enemy = EnemyEntity.Factory.generateFromName("Bomber");
+                }
                 enemy.position = new Vec2(node.x - minX, node.y - minY);
                 enemies.add(enemy);
             }

@@ -16,10 +16,10 @@ public class CollisionManager {
             if (object.box.collide(t.box)){
                 object.onCollision(t);
                 t.onCollision(object);
-                return true;
+                //return true;
             }
         }
-
+        if(Math.round(object.position.x()) >= Main.state.map.map.length || Math.round(object.position.y()) >= Main.state.map.map[0].length) return true;
         return Main.state.map.map[Math.round(object.position.x())][Math.round(object.position.y())] == 0;
     }
 }

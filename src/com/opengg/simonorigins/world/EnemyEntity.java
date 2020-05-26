@@ -1,6 +1,7 @@
 package com.opengg.simonorigins.world;
 
 import com.opengg.simonorigins.Main;
+import com.opengg.simonorigins.Sprite;
 import com.opengg.simonorigins.Vec2;
 
 import java.util.Map;
@@ -14,6 +15,7 @@ public class EnemyEntity extends Entity{
     boolean cooldown = false;
 
     public EnemyEntity(Factory.EntityDescriptor descriptor) {
+        sprite = Sprite.SPRITE_MAP.get(descriptor.sprite);
         this.entityData = descriptor;
         this.maxHealth = entityData.health;
         this.box = new BoundingBox(new Vec2(0.25f,0.25f), new Vec2(0.75f,0.75f), new Vec2(0,0), this);
@@ -47,12 +49,13 @@ public class EnemyEntity extends Entity{
     void doRanged(){
         var angles = this.entityData.attack.pattern.getOutputAngles();
         for(var angle : angles){
+            float realAngle = (float) Math.toRadians(angle);
             var enemyDir = Main.state.entities.get(0).position.sub(this.position).normalize();
-            var real = angle + Math.atan2(enemyDir.y(), enemyDir.x());
+            var real = realAngle + Math.atan2(enemyDir.y(), enemyDir.x());
             var realOutputDir = new Vec2((float)Math.cos(real), (float)Math.sin(real));
             var proj = new Projectile(0.5f, this.entityData.attack.damage, false);
             proj.position = this.position.add(realOutputDir);
-            proj.velocity = realOutputDir.mult(2f);
+            proj.velocity = realOutputDir.mult(4f);
             Main.state.newEntities.add(proj);
         }
     }
@@ -95,13 +98,13 @@ public class EnemyEntity extends Entity{
 
         private static final Map<String, EntityDescriptor> entityDescriptorMap = Map.ofEntries(
                 Map.entry("Normal", new EntityDescriptor(
-                        "bomb.png", 10, AttackType.NORMAL_RANGED, MoveType.APPROACH
+                        "Infantry", 10, AttackType.NORMAL_RANGED, MoveType.APPROACH
                 )),
                 Map.entry("Bomber", new EntityDescriptor(
-                        "bomb.png", 5, AttackType.BOMB, MoveType.JIHADI_JOHN
+                        "Bomb", 5, AttackType.BOMB, MoveType.JIHADI_JOHN
                 )),
                 Map.entry("Shotgun", new EntityDescriptor(
-                        "bomb.png", 12, AttackType.SHOTGUN_RANGED, MoveType.APPROACH
+                        "Cavalry", 12, AttackType.SHOTGUN_RANGED, MoveType.APPROACH
                 ))
         );
 
@@ -157,7 +160,7 @@ public class EnemyEntity extends Entity{
             LINEAR,
             SPHERE(20,360),
             DENSE_SPHERE(5,360),
-            SMALL_ARC(10,30);
+            SMALL_ARC(15,30);
 
             float angleBetween;
             float arc;
@@ -173,7 +176,7 @@ public class EnemyEntity extends Entity{
 
             public int[] getOutputAngles(){
                 if(angleBetween == 0) return new int[]{0};
-                return IntStream.range((int)(-arc/(angleBetween/2)), (int)(arc/(angleBetween/2)))
+                return IntStream.range((int)(-arc/(angleBetween)), (int)(arc/(angleBetween)))
                         .map(i -> (int) (i * angleBetween))
                         .toArray();
             }

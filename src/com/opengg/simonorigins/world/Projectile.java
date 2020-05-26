@@ -1,5 +1,6 @@
 package com.opengg.simonorigins.world;
 
+import com.opengg.simonorigins.CollisionManager;
 import com.opengg.simonorigins.Vec2;
 
 public class Projectile extends Entity{
@@ -29,9 +30,10 @@ public class Projectile extends Entity{
     public void onCollision(Entity other) {
         if(!friendly && other instanceof Player player){
             player.damage(damage);
+            kill();
         }else if(friendly && other instanceof EnemyEntity enemyEntity){
             enemyEntity.damage(damage);
+            kill();
         }
-        kill();
     }
 }

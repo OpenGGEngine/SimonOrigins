@@ -12,11 +12,10 @@ public abstract class Entity {
     public Vec2 position;
     public Vec2 velocity = new Vec2(0,0);
 
-    float width = 0.4f;
+    float width = 0.5f;
     public float maxHealth = 100;
 
     public float health;
-    public String spriteName;
     public Sprite sprite;
     public BoundingBox box;
 
@@ -36,7 +35,7 @@ public abstract class Entity {
         position = position.add(velocity.mult(delta));
         box = new BoundingBox(new Vec2(-width,-width), new Vec2(width,width), position, this);
         box.recreate();
-        if(position.x() <= 0 || position.y() <= 0 || position.x() >= Main.state.map.map.length || position.y() >= Main.state.map.map[0].length) return;
+        if(position.x() <= 0 || position.y() <= 0) return;
         var collided = CollisionManager.collide(this);
         if(collided){
             position = old;
