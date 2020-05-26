@@ -2,13 +2,10 @@ package com.opengg.simonorigins;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.IOException;
 
-public class Main extends JPanel implements KeyListener {
+public class Main extends JPanel implements KeyListener, MouseListener {
     public static GameState state = new GameState();
 
     boolean[] keyCode = new boolean[600];
@@ -19,6 +16,7 @@ public class Main extends JPanel implements KeyListener {
         frame.setVisible(true);
         Main maindow = new Main();
         frame.addKeyListener(maindow);
+        frame.addMouseListener(maindow);
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -83,5 +81,31 @@ public class Main extends JPanel implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         keyCode[e.getKeyCode()] = false;
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        float x = (e.getX() - this.getX())/50.0f;
+        float y = (e.getY() - this.getY()-20)/50.0f;
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }

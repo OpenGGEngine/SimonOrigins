@@ -17,7 +17,7 @@ public class GameState extends State{
     public int camWidth = 12;
     public int camHeight = 12;
 
-    Player player;
+    public Player player;
 
     public GameState(){
         newEntities = new ArrayList<>();
