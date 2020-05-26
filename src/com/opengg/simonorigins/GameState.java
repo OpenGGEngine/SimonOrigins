@@ -98,7 +98,7 @@ public class GameState extends State{
 
         if(player.position.x() < (camWidth)/2.0f){
             tileXIndex = 0;
-        }else if(player.position.x() >= (map.map.length - 1 -  camWidth/2.0f)){
+        }else if(player.position.x() >= (map.map.length - 4 -  camWidth/2.0f)){
             tileXIndex = map.map.length - 1 -  camWidth;
             pX = camWidth -( map.map.length-player.position.x());
         }else{
@@ -109,7 +109,7 @@ public class GameState extends State{
         }
         if(player.position.y() < (camHeight)/2.0f){
             tileYIndex = 0;
-        }else if(player.position.y() >= (map.map[0].length - camHeight/2.0f)){
+        }else if(player.position.y() >= (map.map[0].length - 2 -  camHeight/2.0f)){
             tileYIndex = map.map[0].length - camHeight;
             pY = camHeight-( map.map[0].length-player.position.y());
         }else{
@@ -122,7 +122,7 @@ public class GameState extends State{
         player.py = pY;
 
 
-        map.draw(g,(int)tileXIndex,(int)tileYIndex,tileW,tileH,-mapOffX,-mapOffY);
+        map.draw(g, (int)tileXIndex, (int)tileYIndex ,tileW, tileH, -mapOffX, -mapOffY);
         g.drawImage(Sprite.SPRITE_MAP.get("EmptyBar").image(),0,0, (int) (Main.WIDTH*0.3f), (int) (Main.HEIGHT*0.08f),null);
         g.drawImage(Sprite.SPRITE_MAP.get("GreenBar").image(),0,0,(int)(Main.WIDTH*0.3f*(player.health/player.maxHealth)), (int) (Main.HEIGHT*0.08f),null);
         for(int i=0;i<entities.size();i++){
@@ -130,7 +130,10 @@ public class GameState extends State{
         }
 
         for(Vec2 d:light){
-            g.drawImage(Sprite.SPRITE_MAP.get("Light").image(),(int)(((d.x())-2-tileXIndex)*tileWidth),(int)(((d.y())-2-tileYIndex)*tileWidth),GameState.tileWidth*5,GameState.tileWidth*5,null);
+            g.drawImage(Sprite.SPRITE_MAP.get("Light").image(),
+                    (int) (((d.x()) - 2.5f -tileXIndex) * tileWidth),
+                    (int) (((d.y()) - 2.5f -tileYIndex) * tileWidth),
+                    GameState.tileWidth*5,GameState.tileWidth*5,null);
         }
 
         if(dead) {

@@ -27,7 +27,7 @@ public class MapGenerator {
             int count = 0;
             var roomNodes = new ArrayList<MapNode>();
             roomNodes.add(initialList.get(room));
-            var bossOffset = (room == rooms - 1) ? 80 : 0;
+            var bossOffset = (room == rooms - 1) ? 100 : 0;
             nodeLoop: while(count < 80 + bossOffset + new Random().nextInt(80)){
                 var emptyNodes = getEmptyNodes(roomNodes);
                 for(var node : emptyNodes){
@@ -63,17 +63,17 @@ public class MapGenerator {
 
         int maxX = roomContents.stream()
                 .flatMap(Collection::stream)
-                .mapToInt(node -> node.x).max().getAsInt();
+                .mapToInt(node -> node.x).max().getAsInt() + 4;
         int minX = roomContents.stream()
                 .flatMap(Collection::stream)
-                .mapToInt(node -> node.x).min().getAsInt();
+                .mapToInt(node -> node.x).min().getAsInt() - 4;
 
         int maxY = roomContents.stream()
                 .flatMap(Collection::stream)
-                .mapToInt(node -> node.y).max().getAsInt();
+                .mapToInt(node -> node.y).max().getAsInt() + 5;
         int minY = roomContents.stream()
                 .flatMap(Collection::stream)
-                .mapToInt(node -> node.y).min().getAsInt();
+                .mapToInt(node -> node.y).min().getAsInt() - 4;
 
         int[][] finalMap = new int[maxX - minX + 1][maxY - minY + 1];
 
@@ -100,8 +100,8 @@ public class MapGenerator {
 
         var enemies = new ArrayList<Entity>();
         for(int room = 1; room < rooms; room++){
-            int enemyCount = 8 + (room);
-            if(room == 6){
+            int enemyCount = (room) + (level * 4);
+            if(room == rooms - 1){
                 if(level == 1){
                     var enemy = EnemyEntity.Factory.generateFromName("MasterMole");
                     enemy.position = new Vec2(initialList.get(room).x - minX, initialList.get(room).y - minY);
@@ -120,9 +120,9 @@ public class MapGenerator {
 
             for(int i = 0; i < enemyCount; i++){
                 var node = roomContents.get(room).get(new Random().nextInt(roomContents.get(room).size()));
-                int nextEnemy = new Random().nextInt(3 + room + (level * 2));
+                int nextEnemy = new Random().nextInt(room + (level * 4));
                 EnemyEntity enemy;
-                if(nextEnemy < 5){
+                if(nextEnemy < 6){
                     enemy = EnemyEntity.Factory.generateFromName("Normal");
                 }else if(nextEnemy < 10){
                     enemy = EnemyEntity.Factory.generateFromName("Shotgun");

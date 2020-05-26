@@ -17,14 +17,17 @@ public class Map {
         this.map = map;
     }
 
-    public void draw(Graphics g,int xCam,int yCam,int camWidth,int camHeight,int mapOffX,int mapOffY){
+    public void draw(Graphics g, int xCam, int yCam, int camWidth, int camHeight, int mapOffX, int mapOffY){
         Main.state.light.clear();
-        for(int x =  xCam; x < xCam+camWidth + 1; x++){
-            for(int y = yCam; y < yCam + camHeight; y++){
+        for(int x =  xCam; x < xCam + camWidth + 2; x++){
+            for(int y = yCam; y < yCam + camHeight + 1; y++){
                 if(map[x][y] == 3){
                     Main.state.light.add(new Vec2(x,y));
                 }
-                g.drawImage(tileSet.tileset[map[x][y]],((x-xCam)*tileSet.tileW + mapOffX),((y-yCam)*tileSet.tileH + mapOffY),tileSet.tileW, tileSet.tileH,null);
+                g.drawImage(tileSet.tileset[map[x][y]], (int)((x - xCam - 0.5f) * tileSet.tileW + mapOffX),
+                        (int)((y - yCam - 0.5f) * tileSet.tileH + mapOffY),
+                        tileSet.tileW,
+                        tileSet.tileH,null);
                 //g.setColor(tileSet.colTile[map[x][y]]);
                 //g.fillRect(((x-xCam)*tileSet.tileW + mapOffX), ((y-yCam)*tileSet.tileH + mapOffY), tileSet.tileW, tileSet.tileH);
             }

@@ -137,7 +137,7 @@ public class EnemyEntity extends Entity{
     }
 
     enum MoveType{
-        JIHADI_JOHN(4, 0, 10f),
+        JIHADI_JOHN(7, 0, 10f),
         RUN_INTO(8,0, 5f),
         APPROACH(10,1, 5f),
         BOSS(10,1, 1.5f);
