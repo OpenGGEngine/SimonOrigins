@@ -1,6 +1,7 @@
 package com.opengg.simonorigins.world;
 
 import com.opengg.simonorigins.CollisionManager;
+import com.opengg.simonorigins.Sprite;
 import com.opengg.simonorigins.Vec2;
 
 public class Projectile extends Entity{
@@ -13,6 +14,7 @@ public class Projectile extends Entity{
         this.lifeLength = lifeLength;
         this.damage = damage;
         this.friendly = friendly;
+        this.sprite = Sprite.SPRITE_MAP.get("Bullet");
         width = 0.1f;
         box = new BoundingBox(new Vec2(-width,-width), new Vec2(width,width), new Vec2(0,0), this);
     }
