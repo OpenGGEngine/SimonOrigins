@@ -63,5 +63,6 @@ public class Player extends Entity{
         if(dead) return;
         super.kill();
         GameSound.SOUND_MAP.get("Die").start();
+        Main.state.dead = true;
     }
 }

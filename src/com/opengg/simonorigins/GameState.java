@@ -21,6 +21,7 @@ public class GameState extends State{
     public Player player;
     public boolean held;
     public JFrame panel;
+    public boolean dead;
 
     public GameState(){
         newEntities = new ArrayList<>();
@@ -62,6 +63,10 @@ public class GameState extends State{
 
     @Override
     public void draw(Graphics g) {
+        if(dead){
+            g.drawImage(Sprite.SPRITE_MAP.get("Dead").image(),0,0,600,600,null);
+            return;
+        }
         g.clearRect(0,0,600,600);
         if(this.map == null) return;
         //player.position.x()
@@ -109,6 +114,9 @@ public class GameState extends State{
     }
 
     public void update(float delta){
+        if(dead){
+            return;
+        }
         player.shooting = held;
         for(var e : entities){
             e.update(delta);
