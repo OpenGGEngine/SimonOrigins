@@ -63,14 +63,14 @@ public class MapGenerator {
 
         int maxX = roomContents.stream()
                 .flatMap(Collection::stream)
-                .mapToInt(node -> node.x).max().getAsInt() + 4;
+                .mapToInt(node -> node.x).max().getAsInt() + 6;
         int minX = roomContents.stream()
                 .flatMap(Collection::stream)
                 .mapToInt(node -> node.x).min().getAsInt() - 4;
 
         int maxY = roomContents.stream()
                 .flatMap(Collection::stream)
-                .mapToInt(node -> node.y).max().getAsInt() + 5;
+                .mapToInt(node -> node.y).max().getAsInt() + 6;
         int minY = roomContents.stream()
                 .flatMap(Collection::stream)
                 .mapToInt(node -> node.y).min().getAsInt() - 4;
