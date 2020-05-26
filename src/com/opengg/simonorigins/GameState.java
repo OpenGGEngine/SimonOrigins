@@ -23,6 +23,7 @@ public class GameState extends State{
     public boolean held;
     public JFrame panel;
     public boolean dead;
+    public boolean right;
 
     float dieAlpha = 0;
 
@@ -93,6 +94,7 @@ public class GameState extends State{
         float pX = player.position.x();
         float pY = player.position.y();
 
+
         if(player.position.x() < (camWidth)/2.0f){
             tileXIndex = 0;
         }else if(player.position.x() >= (map.map.length -  camWidth/2.0f)){
@@ -115,12 +117,14 @@ public class GameState extends State{
             mapOffY = (int)(player.position.y()*map.tileSet.tileH %map.tileSet.tileH);
             tileH++;
         }
+        player.px = pX;
+        player.py = pY;
 
 
         map.draw(g,(int)tileXIndex,(int)tileYIndex,tileW,tileH,-mapOffX,-mapOffY);
         g.drawImage(Sprite.SPRITE_MAP.get("EmptyBar").image(),0,0,150,30,null);
         g.drawImage(Sprite.SPRITE_MAP.get("GreenBar").image(),0,0,(int)(150*(player.health/player.maxHealth)),30,null);
-        g.drawImage(player.sprite.image(),(int)(pX*map.tileSet.tileW),(int)(pY*map.tileSet.tileH),map.tileSet.tileW,map.tileSet.tileH,null);
+        g.drawImage(Sprite.SPRITE_MAP.get(right? "Simon": "Simonl").image(),(int)(pX*map.tileSet.tileW),(int)(pY*map.tileSet.tileH),map.tileSet.tileW,map.tileSet.tileH,null);
         for(int i=1;i<entities.size();i++){
             entities.get(i).render(g,tileXIndex,tileYIndex);
         }
