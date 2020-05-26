@@ -14,6 +14,7 @@ public class GameState extends State{
     public Map map;
     public java.util.List<Entity> entities;
     public java.util.List<Entity> newEntities;
+    public java.util.List<Vec2> light = new ArrayList<>();
 
     public int camWidth = 12;
     public int camHeight = 12;
@@ -39,7 +40,7 @@ public class GameState extends State{
         try {
             tileSet.tileset[1] = ImageIO.read(new File("resource/texture/floor.png"));
             tileSet.tileset[0] = ImageIO.read(new File("resource/texture/wall.png"));
-            tileSet.tileset[2] = ImageIO.read(new File("resource/texture/floor.png"));
+            tileSet.tileset[2] = ImageIO.read(new File("resource/texture/path.png"));
             tileSet.tileset[3] = ImageIO.read(new File("resource/texture/lava.png"));
         } catch (IOException e) {
             e.printStackTrace();
@@ -110,6 +111,9 @@ public class GameState extends State{
         g.drawImage(player.sprite.image(),(int)(pX*map.tileSet.tileW),(int)(pY*map.tileSet.tileH),map.tileSet.tileW,map.tileSet.tileH,null);
         for(int i=1;i<entities.size();i++){
             entities.get(i).render(g,tileXIndex,tileYIndex);
+        }
+        for(Vec2 d:light){
+            g.drawImage(Sprite.SPRITE_MAP.get("Light").image(),(int)(((d.x())-2-tileXIndex)*50),(int)(((d.y())-2-tileYIndex)*50),250,250,null);
         }
     }
 

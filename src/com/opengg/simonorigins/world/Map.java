@@ -1,5 +1,8 @@
 package com.opengg.simonorigins.world;
 
+import com.opengg.simonorigins.Main;
+import com.opengg.simonorigins.Vec2;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
@@ -15,8 +18,12 @@ public class Map {
     }
 
     public void draw(Graphics g,int xCam,int yCam,int camWidth,int camHeight,int mapOffX,int mapOffY){
+        Main.state.light.clear();
         for(int x =  xCam; x < xCam+camWidth; x++){
             for(int y = yCam; y < yCam + camHeight; y++){
+                if(map[x][y] == 3){
+                    Main.state.light.add(new Vec2(x,y));
+                }
                 g.drawImage(tileSet.tileset[map[x][y]],((x-xCam)*tileSet.tileW + mapOffX),((y-yCam)*tileSet.tileH + mapOffY),tileSet.tileW, tileSet.tileH,null);
                 //g.setColor(tileSet.colTile[map[x][y]]);
                 //g.fillRect(((x-xCam)*tileSet.tileW + mapOffX), ((y-yCam)*tileSet.tileH + mapOffY), tileSet.tileW, tileSet.tileH);
