@@ -1,9 +1,8 @@
 package com.opengg.simonorigins.world;
 
-import com.opengg.simonorigins.GameSound;
-import com.opengg.simonorigins.Main;
-import com.opengg.simonorigins.Sprite;
-import com.opengg.simonorigins.Vec2;
+import com.opengg.simonorigins.*;
+
+import java.awt.*;
 
 public class Player extends Entity{
     Weapon current;
@@ -22,7 +21,10 @@ public class Player extends Entity{
         var angles = current.pattern.getOutputAngles();
         for(var angle : angles){
             float realAngle = (float) Math.toRadians(angle);
-            var shootDir = velocity.normalize();
+            int x = MouseInfo.getPointerInfo().getLocation().x-Main.state.panel.getX();
+            int y = MouseInfo.getPointerInfo().getLocation().y-Main.state.panel.getY()-10;
+
+            var shootDir = new Vec2(x-300,y-300).normalize();
             var real = realAngle + Math.atan2(shootDir.y(), shootDir.x());
             var realOutputDir = new Vec2((float)Math.cos(real), (float)Math.sin(real));
             var proj = new Projectile(1f, this.current.damage, true);

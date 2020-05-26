@@ -15,6 +15,7 @@ public class Main extends JPanel implements KeyListener, MouseListener {
         frame.setSize(600,600);
         frame.setVisible(true);
         Main maindow = new Main();
+        state.panel = frame;
         frame.addKeyListener(maindow);
         frame.addMouseListener(maindow);
         frame.addWindowListener(new WindowAdapter() {
@@ -45,11 +46,14 @@ public class Main extends JPanel implements KeyListener, MouseListener {
         float y = 0;
         if(keyCode[KeyEvent.VK_A]){
             x = -vel;
-        }else if(keyCode[KeyEvent.VK_D]){
+        }
+        if(keyCode[KeyEvent.VK_D]){
             x = vel;
-        }else if(keyCode[KeyEvent.VK_W]){
+        }
+        if(keyCode[KeyEvent.VK_W]){
             y = -vel;
-        }else if(keyCode[KeyEvent.VK_S]){
+        }
+        if(keyCode[KeyEvent.VK_S]){
             y = vel;
         }
         state.player.shooting = keyCode[KeyEvent.VK_SPACE];
@@ -85,18 +89,17 @@ public class Main extends JPanel implements KeyListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        float x = (e.getX() - this.getX())/50.0f;
-        float y = (e.getY() - this.getY()-20)/50.0f;
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        state.held = true;
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        state.held = false;
     }
 
     @Override
