@@ -35,7 +35,7 @@ public class Map {
 
 
     public static class TileSet{
-        public Image[] tileset = new Image[3];
+        public Image[] tileset = new Image[4];
         public int tileW;
         public int tileH;
         public Color[] colTile = new Color[3];

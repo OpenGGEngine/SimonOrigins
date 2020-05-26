@@ -39,6 +39,7 @@ public class GameState extends State{
             tileSet.tileset[1] = ImageIO.read(new File("resource/texture/floor.png"));
             tileSet.tileset[0] = ImageIO.read(new File("resource/texture/wall.png"));
             tileSet.tileset[2] = ImageIO.read(new File("resource/texture/floor.png"));
+            tileSet.tileset[3] = ImageIO.read(new File("resource/texture/lava.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
