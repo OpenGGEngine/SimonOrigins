@@ -89,6 +89,16 @@ public class EnemyEntity extends Entity{
         }
     }
 
+    @Override
+    public void kill(){
+        super.kill();
+        if(Math.random() < 0.1f){
+            var weapon = new GroundWeapon(this.entityData.attack);
+            weapon.position = this.position;
+            Main.state.newEntities.add(weapon);
+        }
+    }
+
     public static class Factory{
         public record EntityDescriptor(String sprite,
                                        float health,

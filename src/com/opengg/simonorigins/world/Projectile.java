@@ -19,7 +19,12 @@ public class Projectile extends Entity{
 
     @Override
     public void update(float delta){
-        super.update(delta);
+        position = position.add(velocity.mult(delta));
+        box = new BoundingBox(new Vec2(-width,-width), new Vec2(width,width), position, this);
+        box.recreate();
+        if(position.x() <= 0 || position.y() <= 0) return;
+        var collided = CollisionManager.collide(this);
+        if(collided) kill();
         life += delta;
         if(lifeLength <= life){
             kill();

@@ -48,7 +48,7 @@ public class Player extends Entity{
             useWeapon();
             cooldown = true;
         }
-        sprite= Sprite.SPRITE_MAP.get("Simon");
+        sprite = Sprite.SPRITE_MAP.get("Simon");
     }
 
     @Override
