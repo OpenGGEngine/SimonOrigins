@@ -14,7 +14,7 @@ public class MapGenerator {
 
         for(int i = 0; i < rooms; i++){
             currentX += 10 + new Random().nextInt(20);
-            initialList.add(currentX, new Random().nextInt(10), i));
+            initialList.add(new MapNode((int) currentX, new Random().nextInt(10), i));
         }
 
         initialList.sort(Comparator.comparingInt(node -> node.x));
