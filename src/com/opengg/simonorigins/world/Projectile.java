@@ -16,6 +16,7 @@ public class Projectile extends Entity{
         this.friendly = friendly;
         this.sprite = Sprite.SPRITE_MAP.get("Bullet");
         width = 0.1f;
+        renderWidth = 0.15f;
         box = new BoundingBox(new Vec2(-width,-width), new Vec2(width,width), new Vec2(0,0), this);
     }
 

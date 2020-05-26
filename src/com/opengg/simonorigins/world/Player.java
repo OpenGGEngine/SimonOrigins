@@ -16,6 +16,8 @@ public class Player extends Entity{
         health = maxHealth;
         position = p;
         current = Weapon.SHOTGUN;
+        width = 0.5f;
+        renderWidth = 0.9f;
     }
 
     void useWeapon(){
@@ -29,8 +31,12 @@ public class Player extends Entity{
             var real = realAngle + Math.atan2(shootDir.y(), shootDir.x());
             var realOutputDir = new Vec2((float)Math.cos(real), (float)Math.sin(real));
             var proj = new Projectile(this.current.range/10f, this.current.damage, true);
-            proj.position = this.position.add(realOutputDir);
-            proj.velocity = realOutputDir.mult(10f).add(this.velocity);
+            proj.position = this.position.add(realOutputDir.mult(0.6f));
+            if(velocity.length() != 0)
+                proj.velocity = realOutputDir.mult(10f).add(this.velocity.mult(Math.max(0, this.velocity.normalize().dot(realOutputDir.normalize()))));
+            else
+                proj.velocity = realOutputDir.mult(10f);
+
             Main.state.newEntities.add(proj);
         }
     }

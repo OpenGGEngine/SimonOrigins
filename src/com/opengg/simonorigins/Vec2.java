@@ -29,6 +29,8 @@ public record Vec2(float x, float y) {
         return (float) Math.sqrt(x*x + y*y);
     }
 
+    public float dot(Vec2 other) {return this.x * other.x + this.y * other.y;}
+
     public Vec2 normalize(){
         return div(length());
     }

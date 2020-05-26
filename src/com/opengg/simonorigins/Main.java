@@ -11,7 +11,7 @@ public class Main extends JPanel implements KeyListener, MouseListener {
     boolean[] keyCode = new boolean[600];
     long prevTime=0;
     long currTime=0;
-    static int WIDTH = 600, HEIGHT = 600;
+    static int WIDTH = 1920, HEIGHT = 1080;
     public static void main(String[] args) {
         frame = new JFrame("Simon Escape");
         frame.setSize(WIDTH,HEIGHT);
@@ -45,7 +45,7 @@ public class Main extends JPanel implements KeyListener, MouseListener {
     }
 
     public void update(float delta){
-        float vel = 8f;
+        float vel = 10f;
         float x = 0;
         float y = 0;
         if(keyCode[KeyEvent.VK_A]){
@@ -61,6 +61,9 @@ public class Main extends JPanel implements KeyListener, MouseListener {
         }
         if(keyCode[KeyEvent.VK_S]){
             y = vel;
+        }
+        if(keyCode[KeyEvent.VK_K]){
+            Main.setState(new GameState(2));
         }
         state.player.shooting = keyCode[KeyEvent.VK_SPACE];
 

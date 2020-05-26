@@ -13,7 +13,8 @@ public class MapGenerator {
         float currentX = 0;
 
         for(int i = 0; i < rooms; i++){
-            currentX += 10 + new Random().nextInt(20);
+            currentX += 15 + new Random().nextInt(10);
+            if(i == rooms-1) currentX += 20;
             initialList.add(new MapNode((int) currentX, new Random().nextInt(10), i));
         }
 
@@ -26,7 +27,8 @@ public class MapGenerator {
             int count = 0;
             var roomNodes = new ArrayList<MapNode>();
             roomNodes.add(initialList.get(room));
-            nodeLoop: while(count < 80 + new Random().nextInt(80)){
+            var bossOffset = (room == rooms - 1) ? 80 : 0;
+            nodeLoop: while(count < 80 + bossOffset + new Random().nextInt(80)){
                 var emptyNodes = getEmptyNodes(roomNodes);
                 for(var node : emptyNodes){
                     if(node.right == null && Math.random() < roomUnity){
@@ -99,8 +101,6 @@ public class MapGenerator {
         var enemies = new ArrayList<Entity>();
         for(int room = 1; room < rooms; room++){
             int enemyCount = 8 + (room);
-
-
             if(room == 6){
                 if(level == 1){
                     var enemy = EnemyEntity.Factory.generateFromName("MasterMole");
@@ -110,13 +110,17 @@ public class MapGenerator {
                     var enemy = EnemyEntity.Factory.generateFromName("Emak");
                     enemy.position = new Vec2(initialList.get(room).x - minX, initialList.get(room).y - minY);
                     enemies.add(enemy);
+
+                    var enemy2 = EnemyEntity.Factory.generateFromName("MasterMole");
+                    enemy2.position = new Vec2(initialList.get(room).x - minX + 2, initialList.get(room).y - minY);
+                    enemies.add(enemy2);
                 }
                 continue;
             }
 
             for(int i = 0; i < enemyCount; i++){
                 var node = roomContents.get(room).get(new Random().nextInt(roomContents.get(room).size()));
-                int nextEnemy = new Random().nextInt(5 + room);
+                int nextEnemy = new Random().nextInt(3 + room + (level * 2));
                 EnemyEntity enemy;
                 if(nextEnemy < 5){
                     enemy = EnemyEntity.Factory.generateFromName("Normal");

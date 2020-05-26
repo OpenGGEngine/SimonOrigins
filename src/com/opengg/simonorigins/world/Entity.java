@@ -9,6 +9,7 @@ public abstract class Entity {
     public Vec2 velocity = new Vec2(0,0);
 
     float width = 0.5f;
+    float renderWidth = width;
     public float maxHealth = 100;
 
     public float health;
@@ -19,12 +20,13 @@ public abstract class Entity {
 
     public void render(Graphics g, float camX, float camY){
 
-        if(sprite != null && (int) ((position.x() - camX - width/2) * GameState.tileWidth)>0 && ((position.x() - camX - width/2) * GameState.tileWidth)<=Main.state.panel.getWidth()){
-                g.drawImage(sprite.image(),(int) ((position.x() - camX - width/2) * GameState.tileWidth), (int) ((position.y() - camY - width/2) * GameState.tileWidth), (int) (GameState.tileWidth * width), (int) (GameState.tileWidth * width), null);
+        if(sprite != null && (int) ((position.x() - camX - renderWidth/2) * GameState.tileWidth)>0 && ((position.x() - camX - renderWidth/2) * GameState.tileWidth)<=Main.state.panel.getWidth()){
+                g.drawImage(sprite.image(),(int) ((position.x() - camX - renderWidth/2) * GameState.tileWidth), (int) ((position.y() - camY - renderWidth/2) * GameState.tileWidth), (int) (GameState.tileWidth * renderWidth), (int) (GameState.tileWidth * renderWidth), null);
         }else {
             g.setColor(Color.YELLOW);
-            g.fillRect((int) ((position.x() - camX - width) * GameState.tileWidth), (int) ((position.y() - camY - width) * GameState.tileWidth), (int) (GameState.tileWidth * width), (int) (GameState.tileWidth * width));
+            g.fillRect((int) ((position.x() - camX - renderWidth) * GameState.tileWidth), (int) ((position.y() - camY - renderWidth) * GameState.tileWidth), (int) (GameState.tileWidth * renderWidth), (int) (GameState.tileWidth * renderWidth));
         }
+
     }
     public void update(float delta){
         var old = position;

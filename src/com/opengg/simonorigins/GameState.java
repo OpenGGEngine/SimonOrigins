@@ -39,7 +39,7 @@ public class GameState extends State{
         Map.TileSet tileSet = new Map.TileSet();
         tileSet.tileW = tileWidth; tileSet.tileH = tileWidth;
         tileSet.colTile = new Color[]{Color.BLACK,Color.RED,Color.BLACK};
-        var contents = MapGenerator.generateMap(12, level);
+        var contents = MapGenerator.generateMap(7, level);
         this.map = contents.map();
         this.map.tileSet = tileSet;
 
@@ -98,8 +98,8 @@ public class GameState extends State{
 
         if(player.position.x() < (camWidth)/2.0f){
             tileXIndex = 0;
-        }else if(player.position.x() >= (map.map.length -  camWidth/2.0f)){
-            tileXIndex = map.map.length -  camWidth;
+        }else if(player.position.x() >= (map.map.length - 1 -  camWidth/2.0f)){
+            tileXIndex = map.map.length - 1 -  camWidth;
             pX = camWidth -( map.map.length-player.position.x());
         }else{
             tileXIndex = tileXIndex-camWidth/2.0f;
@@ -125,8 +125,7 @@ public class GameState extends State{
         map.draw(g,(int)tileXIndex,(int)tileYIndex,tileW,tileH,-mapOffX,-mapOffY);
         g.drawImage(Sprite.SPRITE_MAP.get("EmptyBar").image(),0,0, (int) (Main.WIDTH*0.3f), (int) (Main.HEIGHT*0.08f),null);
         g.drawImage(Sprite.SPRITE_MAP.get("GreenBar").image(),0,0,(int)(Main.WIDTH*0.3f*(player.health/player.maxHealth)), (int) (Main.HEIGHT*0.08f),null);
-        g.drawImage(Sprite.SPRITE_MAP.get(right? "Simon": "Simonl").image(),(int)(pX*map.tileSet.tileW),(int)(pY*map.tileSet.tileH),map.tileSet.tileW,map.tileSet.tileH,null);
-        for(int i=1;i<entities.size();i++){
+        for(int i=0;i<entities.size();i++){
             entities.get(i).render(g,tileXIndex,tileYIndex);
         }
 
@@ -135,7 +134,7 @@ public class GameState extends State{
         }
 
         if(dead) {
-            dieAlpha += 0.008;
+            dieAlpha += 0.0003;
             if (dieAlpha > 1) dieAlpha = 1;
             AlphaComposite alcom = AlphaComposite.getInstance(
                     AlphaComposite.SRC_OVER, dieAlpha);
