@@ -18,7 +18,7 @@ public record Sprite (Image image, float width, float height){
     static {
         try {
             SPRITE_MAP = Map.ofEntries(
-                        Map.entry("Simon", new Sprite("resource/texture/simon.jpg", 0.5f, 0.5f))
+                        Map.entry("Simon", new Sprite("resource/texture/simonsprite.png", 0.5f, 0.5f))
                 );
         } catch (IOException e) {
             e.printStackTrace();

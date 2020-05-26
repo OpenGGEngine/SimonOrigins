@@ -1,6 +1,7 @@
 package com.opengg.simonorigins.world;
 
 import com.opengg.simonorigins.Main;
+import com.opengg.simonorigins.Sprite;
 import com.opengg.simonorigins.Vec2;
 
 public class Player extends Entity{
@@ -45,6 +46,7 @@ public class Player extends Entity{
             useWeapon();
             cooldown = true;
         }
+        sprite= Sprite.SPRITE_MAP.get("Simon");
     }
 
     @Override

@@ -1,6 +1,9 @@
 package com.opengg.simonorigins.world;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Map {
     public int[][] map;
@@ -14,8 +17,9 @@ public class Map {
     public void draw(Graphics g,int xCam,int yCam,int camWidth,int camHeight,int mapOffX,int mapOffY){
         for(int x =  xCam; x < xCam+camWidth; x++){
             for(int y = yCam; y < yCam + camHeight; y++){
-                g.setColor(tileSet.colTile[map[x][y]]);
-                g.fillRect(((x-xCam)*tileSet.tileW + mapOffX), ((y-yCam)*tileSet.tileH + mapOffY), tileSet.tileW, tileSet.tileH);
+                g.drawImage(tileSet.tileset[map[x][y]],((x-xCam)*tileSet.tileW + mapOffX),((y-yCam)*tileSet.tileH + mapOffY),tileSet.tileW, tileSet.tileH,null);
+                //g.setColor(tileSet.colTile[map[x][y]]);
+                //g.fillRect(((x-xCam)*tileSet.tileW + mapOffX), ((y-yCam)*tileSet.tileH + mapOffY), tileSet.tileW, tileSet.tileH);
             }
         }
     }
@@ -31,7 +35,7 @@ public class Map {
 
 
     public static class TileSet{
-        public Image[] tilset = new Image[3];
+        public Image[] tileset = new Image[3];
         public int tileW;
         public int tileH;
         public Color[] colTile = new Color[3];

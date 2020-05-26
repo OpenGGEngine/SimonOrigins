@@ -2,9 +2,11 @@ package com.opengg.simonorigins.world;
 
 import com.opengg.simonorigins.CollisionManager;
 import com.opengg.simonorigins.Main;
+import com.opengg.simonorigins.Sprite;
 import com.opengg.simonorigins.Vec2;
 
 import java.awt.*;
+import java.awt.image.ImageObserver;
 
 public abstract class Entity {
     public Vec2 position;
@@ -14,14 +16,20 @@ public abstract class Entity {
     float width = 0.3f;
 
     float health;
-    String spriteName;
+    public String spriteName;
+    public Sprite sprite;
     public BoundingBox box;
 
      public boolean dead = false;
 
     public void render(Graphics g, float camX, float camY){
-        g.setColor(Color.YELLOW);
-        g.fillRect((int)((position.x()-camX)*50),(int)((position.y()-camY)*50), (int) (50*width*2), (int) (50*width*2));
+
+        if(sprite != null){
+                g.drawImage(sprite.image(),(int) ((position.x() - camX) * 50), (int) ((position.y() - camY) * 50), (int) (50 * width), (int) (50 * width), null);
+        }else {
+            g.setColor(Color.YELLOW);
+            g.fillRect((int) ((position.x() - camX) * 50), (int) ((position.y() - camY) * 50), (int) (50 * width), (int) (50 * width));
+        }
     }
     public void update(float delta){
         var old = position;
