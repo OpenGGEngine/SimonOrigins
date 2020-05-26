@@ -6,10 +6,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 public class Main extends JPanel implements KeyListener {
     public static GameState state = new GameState();
-    boolean[] keyCode = new boolean[512];
+
+    boolean[] keyCode = new boolean[600];
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Simon Escape");
