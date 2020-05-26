@@ -23,8 +23,7 @@ public class Projectile extends Entity{
         box = new BoundingBox(new Vec2(-width,-width), new Vec2(width,width), position, this);
         box.recreate();
         if(position.x() <= 0 || position.y() <= 0) return;
-        var collided = CollisionManager.collide(this);
-        if(collided) kill();
+        CollisionManager.collide(this);
         life += delta;
         if(lifeLength <= life){
             kill();
@@ -33,7 +32,11 @@ public class Projectile extends Entity{
 
     @Override
     public void onCollision(Entity other) {
-        if(!friendly && other instanceof Player player){
+        if(other instanceof Projectile){
+
+        }else if(other == null){
+            kill();
+        }else if(!friendly && other instanceof Player player){
             player.damage(damage);
             kill();
         }else if(friendly && other instanceof EnemyEntity enemyEntity){

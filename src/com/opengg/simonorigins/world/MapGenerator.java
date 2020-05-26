@@ -8,11 +8,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class MapGenerator {
-    public static MapContents generateMap(float rooms){
+    public static MapContents generateMap(int rooms){
         var initialList = new ArrayList<MapNode>();
+        float currentX = 0;
 
         for(int i = 0; i < rooms; i++){
-            initialList.add(new MapNode(new Random().nextInt(200), new Random().nextInt(10), i));
+            currentX += 10 + new Random().nextInt(20);
+            initialList.add(currentX, new Random().nextInt(10), i));
         }
 
         initialList.sort(Comparator.comparingInt(node -> node.x));
@@ -80,7 +82,7 @@ public class MapGenerator {
         roomContents.stream()
                 .flatMap(Collection::stream)
                 .filter(r -> Math.random() < 0.02)
-                .forEach(node -> finalMap[node.x - minX][node.y - minY] = 3);
+                .forEach(node -> finalMap[node.x - minX][node.y - minY] = 1);
 
         for(int i = 0; i < initialList.size() - 1; i++){
             var node = initialList.get(i);
@@ -115,6 +117,8 @@ public class MapGenerator {
 
             if(room == rooms - 1){
                 var enemy = EnemyEntity.Factory.generateFromName("MasterMole");
+                enemy.position = new Vec2(initialList.get(room).x - minX, initialList.get(room).y - minY);
+                enemies.add(enemy);
             }
         }
 

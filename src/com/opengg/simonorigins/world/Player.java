@@ -11,8 +11,8 @@ public class Player extends Entity{
     boolean cooldown;
 
     public Player(Vec2 p){
-        maxHealth = 100;
-        health = 100;
+        maxHealth = 250;
+        health = maxHealth;
         position = p;
         current = Weapon.SHOTGUN;
     }

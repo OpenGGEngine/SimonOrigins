@@ -4,8 +4,8 @@ import java.util.stream.IntStream;
 
 public enum Weapon {
     NORMAL_MELEE(5, 5),
-    SMG(2, 0.1f, 3f, RangedAttackPattern.LINEAR),
-    AUTOSHOTGUN(1, 0.3f, 2.5f, RangedAttackPattern.SMALL_ARC),
+    SMG(2, 0.1f, 4f, RangedAttackPattern.LINEAR),
+    AUTOSHOTGUN(1, 0.3f, 4f, RangedAttackPattern.SMALL_ARC),
     SHOTGUN(1, 0.5f, 2f, RangedAttackPattern.SMALL_ARC),
     BOMB(20, 100f, 0.5f, RangedAttackPattern.DENSE_SPHERE);
 

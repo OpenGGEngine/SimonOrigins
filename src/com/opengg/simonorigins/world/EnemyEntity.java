@@ -17,6 +17,8 @@ public class EnemyEntity extends Entity{
         sprite = Sprite.SPRITE_MAP.get(descriptor.sprite);
         this.entityData = descriptor;
         this.maxHealth = entityData.health;
+        this.health = this.maxHealth;
+        this.width = descriptor.width;
         this.box = new BoundingBox(new Vec2(0.25f,0.25f), new Vec2(0.75f,0.75f), new Vec2(0,0), this);
     }
 
@@ -82,7 +84,7 @@ public class EnemyEntity extends Entity{
                 }
             }
             case IDLE -> {
-                if(Main.state.entities.get(0).position.sub(this.position).length() < entityData.movement.farDist){
+                if(Main.state.entities.get(0).position.sub(this.position).length() < entityData.movement.farDist || health != maxHealth){
                     currentState = State.RUNNING;
                 }
             }
@@ -101,22 +103,23 @@ public class EnemyEntity extends Entity{
 
     public static class Factory{
         public record EntityDescriptor(String sprite,
+                                       float width,
                                        float health,
                                        Weapon attack,
                                        MoveType movement){}
 
         private static final Map<String, EntityDescriptor> entityDescriptorMap = Map.ofEntries(
                 Map.entry("Normal", new EntityDescriptor(
-                        "Infantry", 15, Weapon.SMG, MoveType.APPROACH
+                        "Infantry", 0.5f, 5, Weapon.SMG, MoveType.APPROACH
                 )),
                 Map.entry("Bomber", new EntityDescriptor(
-                        "Bomb", 5, Weapon.BOMB, MoveType.JIHADI_JOHN
+                        "Bomb", 0.6f, 2, Weapon.BOMB, MoveType.JIHADI_JOHN
                 )),
                 Map.entry("Shotgun", new EntityDescriptor(
-                        "Cavalry", 20, Weapon.SHOTGUN, MoveType.APPROACH
+                        "Cavalry", 0.5f, 8, Weapon.SHOTGUN, MoveType.APPROACH
                 )),
                 Map.entry("MasterMole", new EntityDescriptor(
-                        "MasterMole", 80, Weapon.SHOTGUN, MoveType.APPROACH
+                        "MasterMole", 1f, 80, Weapon.AUTOSHOTGUN, MoveType.APPROACH
                 ))
         );
 
@@ -128,7 +131,9 @@ public class EnemyEntity extends Entity{
     enum MoveType{
         JIHADI_JOHN(4, 0, 10f),
         RUN_INTO(8,0, 5f),
-        APPROACH(8,1, 5f);
+        APPROACH(8,1, 5f),
+        BOSS(10,1, 1f);
+
 
         float farDist;
         float nearDist;

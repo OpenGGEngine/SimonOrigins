@@ -23,6 +23,8 @@ public class GameState extends State{
     public JFrame panel;
     public boolean dead;
 
+    float dieAlpha = 0;
+
     public GameState(){
         newEntities = new ArrayList<>();
         entities = new ArrayList<>();
@@ -63,10 +65,6 @@ public class GameState extends State{
 
     @Override
     public void draw(Graphics g) {
-        if(dead){
-            g.drawImage(Sprite.SPRITE_MAP.get("Dead").image(),0,0,600,600,null);
-            return;
-        }
         g.clearRect(0,0,600,600);
         if(this.map == null) return;
         //player.position.x()
@@ -110,6 +108,14 @@ public class GameState extends State{
         g.drawImage(player.sprite.image(),(int)(pX*map.tileSet.tileW),(int)(pY*map.tileSet.tileH),map.tileSet.tileW,map.tileSet.tileH,null);
         for(int i=1;i<entities.size();i++){
             entities.get(i).render(g,tileXIndex,tileYIndex);
+        }
+        if(dead){
+            dieAlpha += 0.008;
+            if(dieAlpha > 1) dieAlpha = 1;
+            AlphaComposite alcom = AlphaComposite.getInstance(
+                    AlphaComposite.SRC_OVER, dieAlpha);
+            ((Graphics2D)g).setComposite(alcom);
+            g.drawImage(Sprite.SPRITE_MAP.get("Dead").image(),0,0,600,600,null);
         }
     }
 
