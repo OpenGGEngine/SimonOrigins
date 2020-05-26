@@ -16,7 +16,7 @@ public class GameState extends State{
     public java.util.List<Entity> newEntities;
     public java.util.List<Vec2> light = new ArrayList<>();
 
-    public static int camHeight = 16;
+    public static int camHeight = 8;
     public static int tileWidth = Main.HEIGHT/camHeight;
     public static int camWidth = Main.WIDTH/tileWidth;
 
@@ -39,7 +39,7 @@ public class GameState extends State{
         Map.TileSet tileSet = new Map.TileSet();
         tileSet.tileW = tileWidth; tileSet.tileH = tileWidth;
         tileSet.colTile = new Color[]{Color.BLACK,Color.RED,Color.BLACK};
-        var contents = MapGenerator.generateMap(7, level);
+        var contents = MapGenerator.generateMap(3, level);
         this.map = contents.map();
         this.map.tileSet = tileSet;
 
@@ -99,8 +99,8 @@ public class GameState extends State{
         if(player.position.x() < (camWidth)/2.0f){
             tileXIndex = 0;
         }else if(player.position.x() >= (map.map.length - 4 -  camWidth/2.0f)){
-            tileXIndex = map.map.length - 1 -  camWidth;
-            pX = camWidth -( map.map.length-player.position.x());
+            tileXIndex = map.map.length - 4 -  camWidth;
+            pX = camWidth + 4 - ( map.map.length-player.position.x());
         }else{
             tileXIndex = tileXIndex-camWidth/2.0f;
             pX = (camWidth)/2.0f;
@@ -110,8 +110,8 @@ public class GameState extends State{
         if(player.position.y() < (camHeight)/2.0f){
             tileYIndex = 0;
         }else if(player.position.y() >= (map.map[0].length - 2 -  camHeight/2.0f)){
-            tileYIndex = map.map[0].length - camHeight;
-            pY = camHeight-( map.map[0].length-player.position.y());
+            tileYIndex = map.map[0].length - 2 - camHeight;
+            pY = camHeight + 2 - ( map.map[0].length-player.position.y());
         }else{
             tileYIndex = tileYIndex-camHeight/2.0f;
             pY = (camHeight)/2.0f;
