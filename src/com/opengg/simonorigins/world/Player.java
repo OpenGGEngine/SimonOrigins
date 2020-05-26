@@ -47,6 +47,7 @@ public class Player extends Entity{
             cooldown = true;
         }
         sprite= Sprite.SPRITE_MAP.get("Simon");
+        health = maxHealth;
     }
 
     @Override

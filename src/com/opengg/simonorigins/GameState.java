@@ -96,6 +96,8 @@ public class GameState extends State{
 
 
         map.draw(g,(int)tileXIndex,(int)tileYIndex,tileW,tileH,-mapOffX,-mapOffY);
+        g.drawImage(Sprite.SPRITE_MAP.get("EmptyBar").image(),0,0,150,30,null);
+        g.drawImage(Sprite.SPRITE_MAP.get("GreenBar").image(),0,0,(int)(150*(player.health/player.maxHealth)),30,null);
         g.drawImage(player.sprite.image(),(int)(pX*map.tileSet.tileW),(int)(pY*map.tileSet.tileH),map.tileSet.tileW,map.tileSet.tileH,null);
         for(int i=1;i<entities.size();i++){
             entities.get(i).render(g,tileXIndex,tileYIndex);

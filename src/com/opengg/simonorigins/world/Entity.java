@@ -12,10 +12,10 @@ public abstract class Entity {
     public Vec2 position;
     public Vec2 velocity = new Vec2(0,0);
 
-    float maxHealth = 100;
-    float width = 0.3f;
+    float width = 0.4f;
+    public float maxHealth = 100;
 
-    float health;
+    public float health;
     public String spriteName;
     public Sprite sprite;
     public BoundingBox box;
