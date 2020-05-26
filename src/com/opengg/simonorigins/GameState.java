@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.opengg.simonorigins.world.*;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class GameState extends State{
     public Map map;
@@ -18,6 +19,8 @@ public class GameState extends State{
     public int camHeight = 12;
 
     public Player player;
+    public boolean held;
+    public JFrame panel;
 
     public GameState(){
         newEntities = new ArrayList<>();
@@ -105,6 +108,7 @@ public class GameState extends State{
     }
 
     public void update(float delta){
+        player.shooting = held;
         for(var e : entities){
             e.update(delta);
         }
