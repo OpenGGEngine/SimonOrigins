@@ -5,6 +5,7 @@ import com.opengg.simonorigins.Main;
 import com.opengg.simonorigins.Sprite;
 import com.opengg.simonorigins.Vec2;
 
+import java.awt.*;
 import java.util.Map;
 
 public class EnemyEntity extends Entity{
@@ -12,6 +13,8 @@ public class EnemyEntity extends Entity{
     State currentState = State.IDLE;
 
     float attackTimer = 0;
+    float deathTimer = 0;
+    boolean dead2 = false;
     boolean cooldown = false;
 
     public EnemyEntity(Factory.EntityDescriptor descriptor) {
@@ -25,9 +28,27 @@ public class EnemyEntity extends Entity{
     }
 
     @Override
+    public void render(Graphics g, float camX, float camY) {
+        if(dead2){
+            int posX = (int)((position.x() - camX - renderWidth/2) * GameState.tileWidth);
+            int posY = (int) ((position.y() - camY - renderWidth/2) * GameState.tileWidth);
+            g.drawImage(Sprite.SPRITE_MAP.get("Explode").image(),posX, posY, posX+(int) (1.5*GameState.tileWidth * renderWidth), posY+(int) (1.5*GameState.tileWidth * renderWidth),(64*(int)deathTimer),0,(64*((int)deathTimer+1)),64,null);
+        }else {
+            super.render(g, camX, camY);
+        }
+    }
+
+    @Override
     public void update(float delta){
         super.update(delta);
-
+        if(deathTimer > 16.1f){
+            dead = true;
+            return;
+        }
+        if(dead2){
+            deathTimer+=delta*10;
+            return;
+        }
         if(cooldown){
             attackTimer += delta;
             if(attackTimer > this.entityData.attack.frequency){
@@ -95,11 +116,11 @@ public class EnemyEntity extends Entity{
 
     @Override
     public void kill(){
-        super.kill();
         if(Math.random() < 0.1f){
             var weapon = new GroundWeapon(this.entityData.attack);
             weapon.position = this.position;
             Main.state.newEntities.add(weapon);
+            dead2 = true;
         }
         if(this.entityData.sprite.equals("MasterMole")){
             Main.setState(new GameState(2));
