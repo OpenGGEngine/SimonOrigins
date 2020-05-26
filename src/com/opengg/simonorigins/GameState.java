@@ -47,10 +47,10 @@ public class GameState extends State{
         try {
             switch (level){
                 case 1 -> {
-                    tileSet.tileset[1] = ImageIO.read(new File("resource/texture/grass.png"));
+                    tileSet.tileset[1] = ImageIO.read(new File("resource/texture/grass2.png"));
                     tileSet.tileset[0] = ImageIO.read(new File("resource/texture/wall.png"));
-                    tileSet.tileset[2] = ImageIO.read(new File("resource/texture/grass.png"));
-                    tileSet.tileset[3] = ImageIO.read(new File("resource/texture/lava.png"));
+                    tileSet.tileset[2] = ImageIO.read(new File("resource/texture/path2.png"));
+                    tileSet.tileset[3] = ImageIO.read(new File("resource/texture/camp.png"));
                 }
                 case 2 -> {
                     tileSet.tileset[1] = ImageIO.read(new File("resource/texture/floor.png"));
