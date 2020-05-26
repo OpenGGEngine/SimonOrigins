@@ -5,7 +5,6 @@ import com.opengg.simonorigins.Sprite;
 import com.opengg.simonorigins.Vec2;
 
 import java.util.Map;
-import java.util.stream.IntStream;
 
 public class EnemyEntity extends Entity{
     Factory.EntityDescriptor entityData;
@@ -93,18 +92,18 @@ public class EnemyEntity extends Entity{
     public static class Factory{
         public record EntityDescriptor(String sprite,
                                        float health,
-                                       AttackType attack,
+                                       Weapon attack,
                                        MoveType movement){}
 
         private static final Map<String, EntityDescriptor> entityDescriptorMap = Map.ofEntries(
                 Map.entry("Normal", new EntityDescriptor(
-                        "Infantry", 10, AttackType.NORMAL_RANGED, MoveType.APPROACH
+                        "Infantry", 10, Weapon.NORMAL_RANGED, MoveType.APPROACH
                 )),
                 Map.entry("Bomber", new EntityDescriptor(
-                        "Bomb", 5, AttackType.BOMB, MoveType.JIHADI_JOHN
+                        "Bomb", 5, Weapon.BOMB, MoveType.JIHADI_JOHN
                 )),
                 Map.entry("Shotgun", new EntityDescriptor(
-                        "Cavalry", 12, AttackType.SHOTGUN_RANGED, MoveType.APPROACH
+                        "Cavalry", 12, Weapon.SHOTGUN, MoveType.APPROACH
                 ))
         );
 
@@ -129,59 +128,6 @@ public class EnemyEntity extends Entity{
         }
     }
 
-    enum AttackType{
-        NORMAL_MELEE(5, 5),
-        NORMAL_RANGED(3, 0.5f, 3f, RangedAttackPattern.LINEAR),
-        SHOTGUN_RANGED(3, 0.5f, 2f, RangedAttackPattern.SMALL_ARC),
-        BOMB(20, 100f, 0.5f, RangedAttackPattern.DENSE_SPHERE);
-
-        float frequency;
-        float damage;
-        float range;
-        boolean melee;
-        RangedAttackPattern pattern;
-
-        AttackType(float damage, float frequency){
-            this.frequency = frequency;
-            this.damage = damage;
-            this.melee = true;
-            this.range = 0;
-        }
-
-        AttackType(float damage, float frequency, float range, RangedAttackPattern attackPattern){
-            this.damage = damage;
-            this.frequency = frequency;
-            this.pattern = attackPattern;
-            this.range = range;
-            this.melee = false;
-        }
-
-        enum RangedAttackPattern{
-            LINEAR,
-            SPHERE(20,360),
-            DENSE_SPHERE(5,360),
-            SMALL_ARC(15,30);
-
-            float angleBetween;
-            float arc;
-
-            RangedAttackPattern(){
-
-            }
-
-            RangedAttackPattern(float angleBetween, float arc){
-                this.angleBetween = angleBetween;
-                this.arc = arc;
-            }
-
-            public int[] getOutputAngles(){
-                if(angleBetween == 0) return new int[]{0};
-                return IntStream.range((int)(-arc/(angleBetween)), (int)(arc/(angleBetween)))
-                        .map(i -> (int) (i * angleBetween))
-                        .toArray();
-            }
-        }
-    }
 
     enum State{
         ATTACKING,

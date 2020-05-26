@@ -1,5 +1,6 @@
 package com.opengg.simonorigins.world;
 
+import com.opengg.simonorigins.GameSound;
 import com.opengg.simonorigins.Main;
 import com.opengg.simonorigins.Sprite;
 import com.opengg.simonorigins.Vec2;
@@ -14,14 +15,15 @@ public class Player extends Entity{
         maxHealth = 100;
         health = 100;
         position = p;
-        current = new Weapon();
+        current = Weapon.SHOTGUN;
     }
 
     void useWeapon(){
-        var angles = new int[]{0};//this.entityData.attack.pattern.getOutputAngles();
+        var angles = current.pattern.getOutputAngles();
         for(var angle : angles){
+            float realAngle = (float) Math.toRadians(angle);
             var shootDir = velocity.normalize();
-            var real = angle + Math.atan2(shootDir.y(), shootDir.x());
+            var real = realAngle + Math.atan2(shootDir.y(), shootDir.x());
             var realOutputDir = new Vec2((float)Math.cos(real), (float)Math.sin(real));
             var proj = new Projectile(1f, this.current.damage, true);
             proj.position = this.position.add(realOutputDir);
@@ -36,7 +38,7 @@ public class Player extends Entity{
 
         if(cooldown){
             attackTimer += delta;
-            if(attackTimer > current.shootFreq){
+            if(attackTimer > current.frequency){
                 attackTimer = 0;
                 cooldown = false;
             }
@@ -47,11 +49,17 @@ public class Player extends Entity{
             cooldown = true;
         }
         sprite= Sprite.SPRITE_MAP.get("Simon");
-        health = maxHealth;
     }
 
     @Override
     public void onCollision(Entity other) {
 
+    }
+
+    @Override
+    public void kill(){
+        if(dead) return;
+        super.kill();
+        GameSound.SOUND_MAP.get("Die").start();
     }
 }
