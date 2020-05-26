@@ -1,5 +1,6 @@
 package com.opengg.simonorigins.world;
 
+import com.opengg.simonorigins.GameState;
 import com.opengg.simonorigins.Main;
 import com.opengg.simonorigins.Sprite;
 import com.opengg.simonorigins.Vec2;
@@ -54,7 +55,7 @@ public class EnemyEntity extends Entity{
             var enemyDir = Main.state.entities.get(0).position.sub(this.position).normalize();
             var real = realAngle + Math.atan2(enemyDir.y(), enemyDir.x());
             var realOutputDir = new Vec2((float)Math.cos(real), (float)Math.sin(real));
-            var proj = new Projectile(0.5f, this.entityData.attack.damage, false);
+            var proj = new Projectile(this.entityData.attack.range/4f, this.entityData.attack.damage, false);
             proj.position = this.position.add(realOutputDir);
             proj.velocity = realOutputDir.mult(4f);
             Main.state.newEntities.add(proj);
@@ -99,6 +100,9 @@ public class EnemyEntity extends Entity{
             weapon.position = this.position;
             Main.state.newEntities.add(weapon);
         }
+        if(this.entityData.sprite.equals("MasterMole")){
+            Main.state = new GameState(2);
+        }
     }
 
     public static class Factory{
@@ -110,16 +114,19 @@ public class EnemyEntity extends Entity{
 
         private static final Map<String, EntityDescriptor> entityDescriptorMap = Map.ofEntries(
                 Map.entry("Normal", new EntityDescriptor(
-                        "Infantry", 0.5f, 5, Weapon.SMG, MoveType.APPROACH
+                        "Infantry", 0.6f, 5, Weapon.SMG, MoveType.APPROACH
                 )),
                 Map.entry("Bomber", new EntityDescriptor(
                         "Bomb", 0.6f, 2, Weapon.BOMB, MoveType.JIHADI_JOHN
                 )),
                 Map.entry("Shotgun", new EntityDescriptor(
-                        "Cavalry", 0.5f, 8, Weapon.SHOTGUN, MoveType.APPROACH
+                        "Cavalry", 0.6f, 8, Weapon.SHOTGUN, MoveType.APPROACH
                 )),
                 Map.entry("MasterMole", new EntityDescriptor(
-                        "MasterMole", 1f, 80, Weapon.AUTOSHOTGUN, MoveType.APPROACH
+                        "MasterMole", 1f, 120, Weapon.AUTOSHOTGUN, MoveType.BOSS
+                )),
+                Map.entry("Emak", new EntityDescriptor(
+                        "Emak", 1.5f, 200, Weapon.AUTOSHOTGUN, MoveType.BOSS
                 ))
         );
 
@@ -132,7 +139,7 @@ public class EnemyEntity extends Entity{
         JIHADI_JOHN(4, 0, 10f),
         RUN_INTO(8,0, 5f),
         APPROACH(8,1, 5f),
-        BOSS(10,1, 1f);
+        BOSS(13,1, 1f);
 
 
         float farDist;

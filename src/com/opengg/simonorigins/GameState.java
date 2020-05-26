@@ -38,7 +38,7 @@ public class GameState extends State{
         Map.TileSet tileSet = new Map.TileSet();
         tileSet.tileW = 50; tileSet.tileH = 50;
         tileSet.colTile = new Color[]{Color.BLACK,Color.RED,Color.BLACK};
-        var contents = MapGenerator.generateMap(12);
+        var contents = MapGenerator.generateMap(12, level);
         this.map = contents.map();
         this.map.tileSet = tileSet;
 

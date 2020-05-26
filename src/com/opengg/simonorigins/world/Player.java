@@ -28,7 +28,7 @@ public class Player extends Entity{
             var shootDir = new Vec2(x-50*px,y-50*py).normalize();
             var real = realAngle + Math.atan2(shootDir.y(), shootDir.x());
             var realOutputDir = new Vec2((float)Math.cos(real), (float)Math.sin(real));
-            var proj = new Projectile(1f, this.current.damage, true);
+            var proj = new Projectile(this.current.range/10f, this.current.damage, true);
             proj.position = this.position.add(realOutputDir);
             proj.velocity = realOutputDir.mult(10f);
             Main.state.newEntities.add(proj);
