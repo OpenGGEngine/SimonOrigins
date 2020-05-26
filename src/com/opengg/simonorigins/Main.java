@@ -11,7 +11,8 @@ public class Main extends JPanel implements KeyListener, MouseListener {
     boolean[] keyCode = new boolean[600];
     long prevTime=0;
     long currTime=0;
-    static int WIDTH = 1920, HEIGHT = 1080;
+   // static int WIDTH = 1920, HEIGHT = 1080;
+    static int WIDTH = 600, HEIGHT = 600;
     public static void main(String[] args) {
         frame = new JFrame("Simon Escape");
         frame.setSize(WIDTH,HEIGHT);
