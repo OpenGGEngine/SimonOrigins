@@ -46,9 +46,11 @@ public class Main extends JPanel implements KeyListener, MouseListener {
         float y = 0;
         if(keyCode[KeyEvent.VK_A]){
             x = -vel;
+            state.right = false;
         }
         if(keyCode[KeyEvent.VK_D]){
             x = vel;
+            state.right = true;
         }
         if(keyCode[KeyEvent.VK_W]){
             y = -vel;

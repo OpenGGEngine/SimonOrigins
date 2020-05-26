@@ -82,7 +82,7 @@ public class MapGenerator {
         roomContents.stream()
                 .flatMap(Collection::stream)
                 .filter(r -> Math.random() < 0.02)
-                .forEach(node -> finalMap[node.x - minX][node.y - minY] = 1);
+                .forEach(node -> finalMap[node.x - minX][node.y - minY] = 3);
 
         for(int i = 0; i < initialList.size() - 1; i++){
             var node = initialList.get(i);

@@ -8,6 +8,7 @@ public class Player extends Entity{
     Weapon current;
     public boolean shooting;
     float attackTimer = 0;
+    public float px,py;
     boolean cooldown;
 
     public Player(Vec2 p){
@@ -24,7 +25,7 @@ public class Player extends Entity{
             int x = MouseInfo.getPointerInfo().getLocation().x-Main.state.panel.getX();
             int y = MouseInfo.getPointerInfo().getLocation().y-Main.state.panel.getY()-10;
 
-            var shootDir = new Vec2(x-300,y-300).normalize();
+            var shootDir = new Vec2(x-50*px,y-50*py).normalize();
             var real = realAngle + Math.atan2(shootDir.y(), shootDir.x());
             var realOutputDir = new Vec2((float)Math.cos(real), (float)Math.sin(real));
             var proj = new Projectile(1f, this.current.damage, true);
