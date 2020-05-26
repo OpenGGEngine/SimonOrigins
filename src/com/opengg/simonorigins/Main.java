@@ -10,8 +10,7 @@ public class Main extends JPanel implements KeyListener, MouseListener {
 
     boolean[] keyCode = new boolean[600];
 
-    static int WIDTH = 1920, HEIGHT = 1080;
-
+    static int WIDTH = 600, HEIGHT = 600;
     public static void main(String[] args) {
         frame = new JFrame("Simon Escape");
         frame.setSize(WIDTH,HEIGHT);
@@ -69,11 +68,6 @@ public class Main extends JPanel implements KeyListener, MouseListener {
     }
     @Override
     public void paintComponent(Graphics g) {
-        try {
-            Thread.sleep(16);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         update(0.016f);
         state.draw(g);
     }
