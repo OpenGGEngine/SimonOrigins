@@ -9,9 +9,11 @@ public class Main extends JPanel implements KeyListener, MouseListener {
 
     boolean[] keyCode = new boolean[600];
 
+    static int WIDTH = 1920, HEIGHT = 1080;
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("Simon Escape");
-        frame.setSize(600,600);
+        frame.setSize(WIDTH,HEIGHT);
         frame.setVisible(true);
         Main maindow = new Main();
         state = new GameState(1);
@@ -33,7 +35,7 @@ public class Main extends JPanel implements KeyListener, MouseListener {
     }
 
     public Main(){
-        setSize(600,600);
+        setSize(WIDTH,HEIGHT);
     }
 
     public void update(float delta){

@@ -16,8 +16,10 @@ public class GameState extends State{
     public java.util.List<Entity> newEntities;
     public java.util.List<Vec2> light = new ArrayList<>();
 
-    public int camWidth = 12;
-    public int camHeight = 12;
+    public static int tileWidth = Main.HEIGHT/16;
+
+    public static int camWidth = Main.WIDTH/tileWidth;
+    public static int camHeight = 16;
 
     public Player player;
     public boolean held;
@@ -36,7 +38,7 @@ public class GameState extends State{
 
     private void setNewMap(int level){
         Map.TileSet tileSet = new Map.TileSet();
-        tileSet.tileW = 50; tileSet.tileH = 50;
+        tileSet.tileW = tileWidth; tileSet.tileH = tileWidth;
         tileSet.colTile = new Color[]{Color.BLACK,Color.RED,Color.BLACK};
         var contents = MapGenerator.generateMap(12, level);
         this.map = contents.map();
@@ -81,7 +83,7 @@ public class GameState extends State{
 
     @Override
     public void draw(Graphics g) {
-        g.clearRect(0,0,600,600);
+        g.clearRect(0,0,Main.WIDTH,Main.HEIGHT);
         if(this.map == null) return;
         //player.position.x()
         float tileXIndex = (player.position.x());
@@ -122,15 +124,15 @@ public class GameState extends State{
 
 
         map.draw(g,(int)tileXIndex,(int)tileYIndex,tileW,tileH,-mapOffX,-mapOffY);
-        g.drawImage(Sprite.SPRITE_MAP.get("EmptyBar").image(),0,0,150,30,null);
-        g.drawImage(Sprite.SPRITE_MAP.get("GreenBar").image(),0,0,(int)(150*(player.health/player.maxHealth)),30,null);
+        g.drawImage(Sprite.SPRITE_MAP.get("EmptyBar").image(),0,0, (int) (Main.WIDTH*0.3f), (int) (Main.HEIGHT*0.08f),null);
+        g.drawImage(Sprite.SPRITE_MAP.get("GreenBar").image(),0,0,(int)(Main.WIDTH*0.3f*(player.health/player.maxHealth)), (int) (Main.HEIGHT*0.08f),null);
         g.drawImage(Sprite.SPRITE_MAP.get(right? "Simon": "Simonl").image(),(int)(pX*map.tileSet.tileW),(int)(pY*map.tileSet.tileH),map.tileSet.tileW,map.tileSet.tileH,null);
         for(int i=1;i<entities.size();i++){
             entities.get(i).render(g,tileXIndex,tileYIndex);
         }
 
         for(Vec2 d:light){
-            g.drawImage(Sprite.SPRITE_MAP.get("Light").image(),(int)(((d.x())-2-tileXIndex)*50),(int)(((d.y())-2-tileYIndex)*50),250,250,null);
+            g.drawImage(Sprite.SPRITE_MAP.get("Light").image(),(int)(((d.x())-2-tileXIndex)*tileWidth),(int)(((d.y())-2-tileYIndex)*tileWidth),GameState.tileWidth*5,GameState.tileWidth*5,null);
         }
 
         if(dead) {
@@ -139,7 +141,7 @@ public class GameState extends State{
             AlphaComposite alcom = AlphaComposite.getInstance(
                     AlphaComposite.SRC_OVER, dieAlpha);
             ((Graphics2D) g).setComposite(alcom);
-            g.drawImage(Sprite.SPRITE_MAP.get("Dead").image(), 0, 0, 600, 600, null);
+            g.drawImage(Sprite.SPRITE_MAP.get("Dead").image(), 0, 0, Main.WIDTH, Main.HEIGHT, null);
         }
     }
 
