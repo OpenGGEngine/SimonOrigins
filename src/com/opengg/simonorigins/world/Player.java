@@ -7,6 +7,7 @@ public class Player extends Entity{
     public Player(Vec2 p){
         position = p;
         sprite= Sprite.SPRITE_MAP.get("Simon");
+        health = maxHealth;
     }
 
     @Override
