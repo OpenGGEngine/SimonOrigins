@@ -3,10 +3,9 @@ package com.opengg.simonorigins;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 
 public class Main extends JPanel implements KeyListener, MouseListener {
-    public static GameState state = new GameState();
+    public static GameState state;
 
     boolean[] keyCode = new boolean[600];
 
@@ -15,6 +14,7 @@ public class Main extends JPanel implements KeyListener, MouseListener {
         frame.setSize(600,600);
         frame.setVisible(true);
         Main maindow = new Main();
+        state = new GameState(1);
         state.panel = frame;
         frame.addKeyListener(maindow);
         frame.addMouseListener(maindow);
@@ -26,12 +26,8 @@ public class Main extends JPanel implements KeyListener, MouseListener {
         });
         maindow.setVisible(true);
         frame.add(maindow);
-        long prevTime = System.nanoTime();
         while(true){
-            long time = System.nanoTime();
             maindow.repaint();
-            //maindow.repaintUp((time-prevTime)/(float)(1e9));
-            prevTime = time;
         }
 
     }
