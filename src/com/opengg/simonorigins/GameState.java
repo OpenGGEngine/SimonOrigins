@@ -8,17 +8,23 @@ import com.opengg.simonorigins.world.*;
 public class GameState extends State{
     public Map map;
     public java.util.List<Entity> entities;
+    public java.util.List<Entity> newEntities;
     public int camWidth = 10;
     public int camHeight = 10;
 
     Player player;
 
     public GameState(){
+        newEntities = new ArrayList<>();
+        entities = new ArrayList<>();
+
         Map.TileSet tileSet = new Map.TileSet();
         tileSet.tileW = 50; tileSet.tileH = 50;
         tileSet.colTile = new Color[]{Color.BLACK,Color.RED,Color.BLACK};
-        this.map = MapGenerator.generateMap(12);
+        var contents = MapGenerator.generateMap(12);
+        this.map = contents.map();
         this.map.tileSet = tileSet;
+        this.entities = contents.entities();
 
         var firstClear = new Vec2(10000, 10000);
 
@@ -31,15 +37,8 @@ public class GameState extends State{
             }
         }
 
-        entities = new ArrayList<>();
 
-        entities.add(new Player(firstClear));
-        EnemyEntity e = EnemyEntity.Factory.generateFromName("basic");
-        e.position = firstClear.add(new Vec2(0,1));
-        EnemyEntity e1 = EnemyEntity.Factory.generateFromName("basic");
-        e1.position = firstClear.add(new Vec2(1,1));
-        entities.add(e);
-        entities.add(e1);
+        entities.add(0, new Player(firstClear));
         player = (Player)entities.get(0);
     }
 
@@ -93,5 +92,9 @@ public class GameState extends State{
         for(var e : entities){
             e.update(delta);
         }
+
+        entities.removeIf(e -> e.dead);
+        entities.addAll(newEntities);
+        newEntities = new ArrayList<>();
     }
 }

@@ -2,12 +2,13 @@ package com.opengg.simonorigins.world;
 
 import com.opengg.simonorigins.AStar;
 import com.opengg.simonorigins.Node;
+import com.opengg.simonorigins.Vec2;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class MapGenerator {
-    public static Map generateMap(float rooms){
+    public static MapContents generateMap(float rooms){
         var initialList = new ArrayList<MapNode>();
 
         for(int i = 0; i < rooms; i++){
@@ -23,7 +24,7 @@ public class MapGenerator {
             int count = 0;
             var roomNodes = new ArrayList<MapNode>();
             roomNodes.add(initialList.get(room));
-            nodeLoop: while(count < 80 + new Random().nextInt(40)){
+            nodeLoop: while(count < 80 + new Random().nextInt(80)){
                 var emptyNodes = getEmptyNodes(roomNodes);
                 for(var node : emptyNodes){
                     if(node.right == null && Math.random() < roomUnity){
@@ -88,7 +89,19 @@ public class MapGenerator {
             });
         }
 
-        return new Map(finalMap);
+        var enemies = new ArrayList<Entity>();
+        for(int room = 1; room < rooms; room++){
+            int enemyCount = 8 + (room);
+
+            for(int i = 0; i < enemyCount; i++){
+                var node = roomContents.get(room).get(new Random().nextInt(roomContents.get(room).size()));
+                var enemy = EnemyEntity.Factory.generateFromName("Normal");
+                enemy.position = new Vec2(node.x - minX, node.y - minY);
+                enemies.add(enemy);
+            }
+        }
+
+        return new MapContents(new Map(finalMap), enemies);
     }
 
     static List<MapNode> getEmptyNodes(List<MapNode> nodes){
@@ -126,5 +139,9 @@ public class MapGenerator {
             this.y = y;
             this.roomId = roomId;
         }
+    }
+
+    public static record MapContents(Map map, List<Entity> entities){
+
     }
 }

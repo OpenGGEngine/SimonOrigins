@@ -1,6 +1,7 @@
 package com.opengg.simonorigins.world;
 
 import com.opengg.simonorigins.CollisionManager;
+import com.opengg.simonorigins.Main;
 import com.opengg.simonorigins.Vec2;
 
 import java.awt.*;
@@ -10,22 +11,24 @@ public abstract class Entity {
     public Vec2 velocity = new Vec2(0,0);
 
     float maxHealth = 100;
+    float width = 0.3f;
 
     float health;
     String spriteName;
     public BoundingBox box;
 
-    boolean dead = false;
+     public boolean dead = false;
 
     public void render(Graphics g, float camX, float camY){
         g.setColor(Color.YELLOW);
-        g.fillRect((int)((position.x()-camX)*50),(int)((position.y()-camY)*50),50,50);
+        g.fillRect((int)((position.x()-camX)*50),(int)((position.y()-camY)*50), (int) (50*width*2), (int) (50*width*2));
     }
     public void update(float delta){
         var old = position;
         position = position.add(velocity.mult(delta));
-        box = new BoundingBox(new Vec2(0.25f,0.25f), new Vec2(0.75f,0.75f), position, this);
+        box = new BoundingBox(new Vec2(-width,-width), new Vec2(width,width), position, this);
         box.recreate();
+        if(position.x() <= 0 || position.y() <= 0 || position.x() >= Main.state.map.map.length || position.y() >= Main.state.map.map[0].length) return;
         var collided = CollisionManager.collide(this);
         if(collided){
             position = old;

@@ -8,7 +8,6 @@ import java.util.stream.IntStream;
 
 public class EnemyEntity extends Entity{
     Factory.EntityDescriptor entityData;
-    String name;
     State currentState = State.IDLE;
 
     float attackTimer = 0;
@@ -32,13 +31,29 @@ public class EnemyEntity extends Entity{
             }
         }
 
+        if(Main.state.entities.get(0).position.sub(this.position).length() < this.entityData.attack.range && !cooldown){
+            doRanged();
+            cooldown = true;
+        }
+
         updateState();
         switch (currentState){
-            case ATTACKING -> {
-
-            }
+            case ATTACKING -> velocity = new Vec2(0,0);
             case RUNNING -> velocity = Main.state.entities.get(0).position.sub(this.position).normalize().mult(this.entityData.movement.velocity);
             case IDLE -> velocity = velocity.add(new Vec2(((float)Math.random())*0.2f, ((float)Math.random())*0.2f)).normalize().mult(0.3f);
+        }
+    }
+
+    void doRanged(){
+        var angles = this.entityData.attack.pattern.getOutputAngles();
+        for(var angle : angles){
+            var enemyDir = Main.state.entities.get(0).position.sub(this.position).normalize();
+            var real = angle + Math.atan2(enemyDir.y(), enemyDir.x());
+            var realOutputDir = new Vec2((float)Math.cos(real), (float)Math.sin(real));
+            var proj = new Projectile(0.5f, this.entityData.attack.damage, false);
+            proj.position = this.position.add(realOutputDir);
+            proj.velocity = realOutputDir.mult(2f);
+            Main.state.newEntities.add(proj);
         }
     }
 
@@ -96,9 +111,9 @@ public class EnemyEntity extends Entity{
     }
 
     enum MoveType{
-        JIHADI_JOHN(4, 0, 2f),
-        RUN_INTO(8,2, 1.5f),
-        APPROACH(8,0, 1.5f);
+        JIHADI_JOHN(4, 0, 10f),
+        RUN_INTO(8,0, 5f),
+        APPROACH(8,1, 5f);
 
         float farDist;
         float nearDist;
@@ -113,8 +128,8 @@ public class EnemyEntity extends Entity{
 
     enum AttackType{
         NORMAL_MELEE(5, 5),
-        NORMAL_RANGED(3, 0.5f, 5f, RangedAttackPattern.LINEAR),
-        SHOTGUN_RANGED(3, 0.5f, 5f, RangedAttackPattern.SMALL_ARC),
+        NORMAL_RANGED(3, 0.5f, 3f, RangedAttackPattern.LINEAR),
+        SHOTGUN_RANGED(3, 0.5f, 2f, RangedAttackPattern.SMALL_ARC),
         BOMB(20, 100f, 0.5f, RangedAttackPattern.DENSE_SPHERE);
 
         float frequency;
@@ -157,6 +172,7 @@ public class EnemyEntity extends Entity{
             }
 
             public int[] getOutputAngles(){
+                if(angleBetween == 0) return new int[]{0};
                 return IntStream.range((int)(-arc/(angleBetween/2)), (int)(arc/(angleBetween/2)))
                         .map(i -> (int) (i * angleBetween))
                         .toArray();

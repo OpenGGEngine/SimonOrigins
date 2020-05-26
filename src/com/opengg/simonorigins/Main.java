@@ -40,25 +40,31 @@ public class Main extends JPanel implements KeyListener {
     }
 
     public void update(float delta){
-        float vel = 1.5f;
+        float vel = 8f;
         float x = 0;
         float y = 0;
-        if(keyCode[KeyEvent.VK_LEFT]){
+        if(keyCode[KeyEvent.VK_A]){
             x = -vel;
-        }else if(keyCode[KeyEvent.VK_RIGHT]){
+        }else if(keyCode[KeyEvent.VK_D]){
             x = vel;
-        }else if(keyCode[KeyEvent.VK_UP]){
+        }else if(keyCode[KeyEvent.VK_W]){
             y = -vel;
-        }else if(keyCode[KeyEvent.VK_DOWN]){
+        }else if(keyCode[KeyEvent.VK_S]){
             y = vel;
         }
+        state.player.shooting = keyCode[KeyEvent.VK_SPACE];
 
         state.player.velocity = new Vec2(x,y);
         state.update(delta);
     }
     @Override
     public void paintComponent(Graphics g) {
-        update(0.01f);
+        try {
+            Thread.sleep(16);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        update(0.016f);
         state.draw(g);
     }
 
